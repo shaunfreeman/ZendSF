@@ -56,6 +56,11 @@ abstract class ZendSF_Model_Mapper_Abstract
     protected $_modelClass;
 
     /**
+     * @var array Form instances
+     */
+    protected $_forms = array();
+
+    /**
      * Sets the database table object.
      *
      * @param string $dbTable
@@ -68,7 +73,7 @@ abstract class ZendSF_Model_Mapper_Abstract
         }
 
         if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
+            throw new ZendSF_Model_Exception('Invalid table data gateway provided');
         }
 
         $this->_dbTable = $dbTable;
@@ -78,7 +83,6 @@ abstract class ZendSF_Model_Mapper_Abstract
     /**
      * Gets the database table object.
      *
-     * @param none
      * @return object $_dbTable
      */
     public function getDbTable()
@@ -93,7 +97,7 @@ abstract class ZendSF_Model_Mapper_Abstract
     /**
      * Deletes records from database.
      *
-     * @param string $where
+     * @param string $where clause for record deletion
      * @return Zend_Db_Table_Abstrac
      */
     protected function _delete($where)
@@ -151,6 +155,54 @@ abstract class ZendSF_Model_Mapper_Abstract
         }
 
         return ($raw) ? $row : $this->_setVars($row, new $this->_modelClass());
+    }
+
+    /**
+     * Gets a Form
+     *
+     * @param string $name
+     * @return Zend_Form
+     */
+    public function getForm($name)
+    {
+        if (!isset($this->_forms[$name])) {
+            $class = join('_', array(
+                    $this->_getNamespace(),
+                    'Form',
+                    $this->_getInflected($name)
+            ));
+            $this->_forms[$name] = new $class();
+        }
+	    return $this->_forms[$name];
+    }
+
+    /**
+     * Classes are named spaced using their module name
+     * this returns that module name or the first class name segment.
+     *
+     * @return string This class namespace
+     */
+    private function _getNamespace()
+    {
+        $ns = explode('_', get_class($this));
+        return $ns[0];
+    }
+
+    /**
+     * Inflect the name using the inflector filter
+     *
+     * Changes camelCaseWord to Camel_Case_Word
+     *
+     * @param string $name The name to inflect
+     * @return string The inflected string
+     */
+    private function _getInflected($name)
+    {
+        $inflector = new Zend_Filter_Inflector(':class');
+        $inflector->setRules(array(
+            ':class'  => array('Word_CamelCaseToUnderscore')
+        ));
+        return ucfirst($inflector->filter(array('class' => $name)));
     }
 }
 ?>

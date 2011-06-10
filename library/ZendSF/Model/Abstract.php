@@ -71,8 +71,8 @@ abstract class ZendSF_Model_Abstract
     public function  __set($name, $value) {
        $method = 'set' . ucfirst($name);
 
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new ZendSF_Exception('Invalid ' . $name . ' property');
+        if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
+            throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
         }
 
         $this->$method($value);
@@ -87,8 +87,8 @@ abstract class ZendSF_Model_Abstract
     public function  __get($name) {
         $method = 'get' . ucfirst($name);
 
-        if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new ZendSF_Exception('Invalid ' . $name . ' property');
+        if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
+            throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
         }
 
         return $this->$method();

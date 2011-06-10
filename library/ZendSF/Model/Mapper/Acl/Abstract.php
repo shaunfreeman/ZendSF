@@ -81,7 +81,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
         } elseif (null === $identity) {
             $identity = new Zend_Acl_Role('Guest');
         } elseif (!$identity instanceof Zend_Acl_Role_Interface) {
-            throw new ZendSF_Exception('Invalid identity provided');
+            throw new ZendSF_Model_Exception('Invalid identity provided');
         }
 
         $this->_identity = $identity;
