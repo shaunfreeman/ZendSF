@@ -98,7 +98,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      * Deletes records from database.
      *
      * @param string $where clause for record deletion
-     * @return Zend_Db_Table_Abstrac
+     * @return Zend_Db_Table_Abstract
      */
     protected function _delete($where)
     {

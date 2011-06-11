@@ -11,7 +11,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Uthando-CMS is distributed in the hope that it will be useful,
+ * ZendSF is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -123,7 +123,17 @@ abstract class ZendSF_Model_Abstract
 
         foreach ($this->_classMethods as $method) {
             if (substr($method, 0, 3) == 'get') {
-                $array[lcfirst(substr($method,3))] = $this->$method();
+                $value = $this->$method();
+
+                if ($value instanceof Zend_Currency) {
+                    $value = $value->getValue();
+                }
+
+                if ($value instanceof Zend_Date) {
+                    $value = $value->getTimestamp();
+                }
+
+                $array[lcfirst(substr($method,3))] = $value;
             }
         }
 
