@@ -83,7 +83,7 @@ abstract class ZendSF_Model_Mapper_Abstract
     /**
      * Gets the database table object.
      *
-     * @return object $_dbTable
+     * @return Zend_Db_Table_Abstract
      */
     public function getDbTable()
     {
@@ -95,23 +95,13 @@ abstract class ZendSF_Model_Mapper_Abstract
     }
 
     /**
-     * Deletes records from database.
-     *
-     * @param string $where clause for record deletion
-     * @return Zend_Db_Table_Abstract
-     */
-    protected function _delete($where)
-    {
-        return $this->getDbTable()->delete($where);
-    }
-
-    /**
      * Finds a single record by it's id.
      *
      * @param int $id
-     * @return mixed
+     * @return ZendSF_Model_Abstract
      */
-    public function find($id) {
+    public function find($id)
+    {
         $result = $this->getDbTable()->find($id);
 
         if (0 == count($result)) {
@@ -119,21 +109,22 @@ abstract class ZendSF_Model_Mapper_Abstract
         }
 
         $row = $result->current();
-        return $this->_setVars($row, new $this->_modelClass());
+        return new $this->_modelClass($row);
     }
 
     /**
      * Fetches all entries in table or from a select object.
      *
      * @param object $select dbTable select object
-     * @return array $entries
+     * @return array ZendSF_Model_Abstract
      */
-    public function fetchAll($select = null) {
+    public function fetchAll($select = null)
+    {
         $resultSet = $this->getDbTable()->fetchAll($select);
         $entries = array();
 
         foreach ($resultSet as $row) {
-            $entries[] = $this->_setVars($row, new $this->_modelClass());
+            $entries[] = new $this->_modelClass($row);
         }
 
         return $entries;
@@ -144,7 +135,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      *
      * @param object $select dbTable select object
      * @param bool $raw Weather to retrun the model class or Zend_Db_Table_Abstract
-     * @return mixed
+     * @return ZendSF_Model_DbTable_Abstract|Zend_Db_Table_Row_Abstract|null
      */
     public function fetchRow($select, $raw = false)
     {
@@ -154,7 +145,38 @@ abstract class ZendSF_Model_Mapper_Abstract
             return;
         }
 
-        return ($raw) ? $row : $this->_setVars($row, new $this->_modelClass());
+        return ($raw) ? $row : new $this->_modelClass($row);
+    }
+
+    /**
+     * Saves a row to database
+     *
+     * @param ZendSF_Model_Abstract $model
+     * @return mixed
+     */
+    public function save(ZendSF_Model_Abstract $model)
+    {
+        $primary = $this->getDbTable()->info('primary');
+
+        $data = $model->toArray();
+
+        if (null === ($id = $model->$primary)) {
+            unset($data[$pimary]);
+            return $this->getDbTable()->insert($data);
+        } else {
+            return $this->getDbTable()->update($data, array($primary . ' = ?' => $id));
+        }
+    }
+
+    /**
+     * Deletes records from database.
+     *
+     * @param string $where clause for record deletion
+     * @return int number of rows deleted
+     */
+    public function delete($where)
+    {
+        return $this->getDbTable()->delete($where);
     }
 
     /**

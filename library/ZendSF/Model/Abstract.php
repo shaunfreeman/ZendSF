@@ -47,13 +47,13 @@ abstract class ZendSF_Model_Abstract
     /**
      * Constructor
      *
-     * @param array|Zend_Config|null $options
+     * @param array|Zend_Db_Table_Abstract|null $options
      */
     public function __construct($options = null)
     {
         $this->_classMethods = get_class_methods($this);
 
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof Zend_Db_Table_Abstract) {
             $options = $options->toArray();
         }
 

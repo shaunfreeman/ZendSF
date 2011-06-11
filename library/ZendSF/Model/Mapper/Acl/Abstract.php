@@ -51,6 +51,79 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     protected $_identity;
 
     /**
+     * Checks wheather user is allowed to find a single record by it's id.
+     *
+     * @param int $id
+     */
+    public function find($id)
+    {
+        if (!$this->checkAcl('find')) {
+            throw new ZendSF_Acl_Exception("Insufficient rights");
+        }
+
+        parent::find($id);
+    }
+
+    /**
+     * Checks wheather user is allowed to fetch all
+     * entries in table or from a select object.
+     *
+     * @param object $select dbTable select object
+     * @return array ZendSF_Model_Abstract
+     */
+    public function fetchAll($select = null)
+    {
+        if (!$this->checkAcl('fetchAll')) {
+            throw new ZendSF_Acl_Exception("Insufficient rights");
+        }
+
+        parent::fetchAll($select);
+    }
+
+    /**
+     * Checks wheather user is allowed to fetch one row from database.
+     *
+     * @param object $select dbTable select object
+     * @param bool $raw Weather to retrun the model class or Zend_Db_Table_Abstract
+     */
+    public function fetchRow($select, $raw = false)
+    {
+        if (!$this->checkAcl('fetchRow')) {
+            throw new ZendSF_Acl_Exception("Insufficient rights");
+        }
+
+        parent::fetchRow($select, $raw);
+    }
+
+    /**
+     * Checks wheather user is allowed to save a row to database
+     *
+     * @param ZendSF_Model_Abstract $model
+     */
+    public function save(ZendSF_Model_Abstract $model)
+    {
+        if (!$this->checkAcl('save')) {
+            throw new ZendSF_Acl_Exception("Insufficient rights");
+        }
+
+        parent::save($model);
+    }
+
+    /**
+     * Checks wheather user is allowed to delete records from database.
+     *
+     * @param string $where clause for record deletion
+     */
+    public function delete($where)
+    {
+        if (!$this->checkAcl('delete')) {
+            throw new ZendSF_Acl_Exception("Insufficient rights");
+        }
+
+        parent::delete($where);
+    }
+
+    /**
      * Implement the Zend_Acl_Resource_Interface, make this model
      * an acl resource
      *
@@ -125,17 +198,16 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     }
 
     /**
-     * Injector for the acl, the acl can be injected either directly
-     * via this method or by passing the 'acl' option to the models
-     * construct.
+     * Injector for the acl, the acl can be injected directly
+     * via this method.
      *
      * We add all the access rule for this resource here, so we
-     * add $this as the resource, plus its rules.
+     * add $this as the resource, rules are defined by the parent class.
      *
      * @param Zend_Acl_Resource_Interface $acl
      * @return ZendSF_Model_Mapper_Abstract
      */
-    public function setAcl($acl)
+    public function setAcl(Zend_Acl_Resource_Interface $acl)
     {
         if (!$acl->has($this->getResourceId())) {
             $acl->add($this);
