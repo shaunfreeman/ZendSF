@@ -53,7 +53,7 @@ abstract class ZendSF_Model_Abstract
     {
         $this->_classMethods = get_class_methods($this);
 
-        if ($options instanceof Zend_Db_Table_Abstract) {
+        if ($options instanceof Zend_Db_Table_Row) {
             $options = $options->toArray();
         }
 

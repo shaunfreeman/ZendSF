@@ -54,12 +54,13 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
      */
     public function init()
     {
+        $this->_log = Zend_Registry::get('log');
+
         $this->view->admin = $this->_request->getParam('isAdmin');
+        $this->view->request = $this->_request->getParams();
 
         $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
         $this->view->messages = $this->_flashMessenger->getMessages();
-
-        $this->_log = Zend_Registry::get('log');
     }
 
     /**

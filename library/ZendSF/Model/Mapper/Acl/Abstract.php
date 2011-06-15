@@ -61,7 +61,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
             throw new ZendSF_Acl_Exception("Insufficient rights");
         }
 
-        parent::find($id);
+        return parent::find($id);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
             throw new ZendSF_Acl_Exception("Insufficient rights");
         }
 
-        parent::fetchAll($select);
+        return parent::fetchAll($select);
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
             throw new ZendSF_Acl_Exception("Insufficient rights");
         }
 
-        parent::fetchRow($select, $raw);
+        return parent::fetchRow($select, $raw);
     }
 
     /**
@@ -106,7 +106,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
             throw new ZendSF_Acl_Exception("Insufficient rights");
         }
 
-        parent::save($model);
+        return parent::save($model);
     }
 
     /**
@@ -120,7 +120,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
             throw new ZendSF_Acl_Exception("Insufficient rights");
         }
 
-        parent::delete($where);
+        return parent::delete($where);
     }
 
     /**
@@ -204,10 +204,10 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
      * We add all the access rule for this resource here, so we
      * add $this as the resource, rules are defined by the parent class.
      *
-     * @param Zend_Acl_Resource_Interface $acl
+     * @param Zend_Acl $acl
      * @return ZendSF_Model_Mapper_Abstract
      */
-    public function setAcl(Zend_Acl_Resource_Interface $acl)
+    public function setAcl(Zend_Acl $acl)
     {
         if (!$acl->has($this->getResourceId())) {
             $acl->add($this);
@@ -227,11 +227,11 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     public function getAcl()
     {
         if (null === $this->_acl) {
-            $module = $this->getRequest()->getModuleName();
+            $module = $this->_getNamespace();
             $acl = ucfirst($module) . '_Model_Acl_' . ucfirst($module);
 
             if (class_exists($acl)) {
-                $this->_acl = new $acl;
+                $this->setAcl(new $acl);
             }
         }
 

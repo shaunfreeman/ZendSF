@@ -204,7 +204,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      *
      * @return string This class namespace
      */
-    private function _getNamespace()
+    protected function _getNamespace()
     {
         $ns = explode('_', get_class($this));
         return $ns[0];
@@ -218,7 +218,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      * @param string $name The name to inflect
      * @return string The inflected string
      */
-    private function _getInflected($name)
+    protected function _getInflected($name)
     {
         $inflector = new Zend_Filter_Inflector(':class');
         $inflector->setRules(array(

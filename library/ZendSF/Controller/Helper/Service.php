@@ -55,12 +55,12 @@ class ZendSF_Controller_Helper_Service extends Zend_Controller_Action_Helper_Abs
                     '/services/' .
                     ucfirst($service) .
                     '.php';
-            
+
             if (!file_exists($classPath)) {
                 return false;
             }
             if (!class_exists($class)) {
-                throw new SF_Exception("Class $class not found in " . basename($classPath));
+                throw new ZendSF_Exception("Class $class not found in " . basename($classPath));
             }
             $this->_services[$module][$service] = new $class();
         }
