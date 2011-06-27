@@ -156,12 +156,19 @@ abstract class ZendSF_Model_Mapper_Abstract
      */
     public function save(ZendSF_Model_Abstract $model)
     {
-        $primary = $this->getDbTable()->info('primary');
+        $primary = current($this->getDbTable()->info('primary'));
+        $cols = $this->getDbTable()->info('cols');
 
         $data = $model->toArray();
 
+        foreach ($data as $key => $value) {
+            if (!in_array($key, $cols)) {
+                unset($data[$key]);
+            }
+        }
+
         if (null === ($id = $model->$primary)) {
-            unset($data[$pimary]);
+            unset($data[$primary]);
             return $this->getDbTable()->insert($data);
         } else {
             return $this->getDbTable()->update($data, array($primary . ' = ?' => $id));
@@ -227,4 +234,3 @@ abstract class ZendSF_Model_Mapper_Abstract
         return ucfirst($inflector->filter(array('class' => $name)));
     }
 }
-?>

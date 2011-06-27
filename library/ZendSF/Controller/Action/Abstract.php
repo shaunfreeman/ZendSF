@@ -56,11 +56,14 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     {
         $this->_log = Zend_Registry::get('log');
 
+        $this->_authService = new ZendSF_Service_Authentication();
+
         $this->view->admin = $this->_request->getParam('isAdmin');
         $this->view->request = $this->_request->getParams();
 
-        $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
-        $this->view->messages = $this->_flashMessenger->getMessages();
+        $this->view->navigation()
+                ->setAcl($this->_helper->getHelper('Acl')->getAcl())
+                ->setRole($this->_helper->getHelper('Acl')->getIdentity());
     }
 
     /**
@@ -81,4 +84,3 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
         $this->view->$formName->setMethod($method);
     }
 }
-?>

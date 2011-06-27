@@ -41,5 +41,3 @@ class ZendSF_Model_Exception extends ZendSF_Exception
 {
     //put your code here
 }
-
-?>

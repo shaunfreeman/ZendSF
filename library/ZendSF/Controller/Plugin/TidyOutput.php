@@ -46,7 +46,7 @@ class ZendSF_Controller_Plugin_TidyOutput extends Zend_Controller_Plugin_Abstrac
      protected $_tidy;
 
     /**
-     * @var array
+     * @var array tidy configuration defaultd
      */
     protected static $_tidyConfig = array(
         'indent'                        => true,
@@ -56,9 +56,9 @@ class ZendSF_Controller_Plugin_TidyOutput extends Zend_Controller_Plugin_Abstrac
         'drop-proprietary-attributes'   => true,
         'wrap'                          => 600,
     );
-    
+
     /**
-     * @var string
+     * @var string default encoding
      */
     protected static $_tidyEncoding = 'UTF8';
 
@@ -91,11 +91,13 @@ class ZendSF_Controller_Plugin_TidyOutput extends Zend_Controller_Plugin_Abstrac
 
     public function dispatchLoopShutdown()
     {
-        $response = $this->getResponse();
-        $tidy     = $this->getTidy($response->getBody());
-        $tidy->cleanRepair();
-        $response->setBody((string) $tidy);
+        $pathInfo = $this->getRequest()->getPathInfo();
+
+        if (preg_match('#/sitemap(.xml)?#', $pathInfo) == 0) {
+            $response = $this->getResponse();
+            $tidy     = $this->getTidy($response->getBody());
+            $tidy->cleanRepair();
+            $response->setBody((string) $tidy);
+        }
     }
 }
-
-?>

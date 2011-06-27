@@ -43,4 +43,3 @@ class ZendSF_Exception extends Exception
     const WARN = 'WARN';
     const ERROR = 'ERROR';
 }
-?>

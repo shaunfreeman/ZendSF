@@ -1,6 +1,6 @@
 <?php
 /**
- * Passowrd.php
+ * AdminContext.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -21,43 +21,34 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Utility
+ * @subpackage Controller_Plugin
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Utility Class to hash or encrypt passwords.
+ * Changes the layout for the admin features.
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Utility
+ * @subpackage Controller_Plugin
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Utility_Password
+class ZendSF_Controller_Plugin_AdminContext extends Zend_Controller_Plugin_Abstract
 {
     /**
-     * Creates a sha1 hash.
+     * Changes the layout to the admin layout
      *
-     * @param string $hash
-     * @return string
+     * @param Zend_Controller_Request_Abstract $request
      */
-    public static function sha1($hash)
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        return sha1($hash);
-    }
-
-    /**
-     * Creates a md5 hash.
-     *
-     * @param string $hash
-     * @return string
-     */
-    public static function md5($hash)
-    {
-        return md5($hash);
+        if ($request->getParam('isAdmin')) {
+            $layout = Zend_Layout::getMvcInstance();
+            $layout->setLayout('/admin/layout');
+        }
     }
 }

@@ -99,4 +99,3 @@ class ZendSF_Utility_Array
 		return $array;
     }
 }
-?>

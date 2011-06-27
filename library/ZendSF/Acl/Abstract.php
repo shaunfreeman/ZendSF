@@ -36,7 +36,7 @@
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Acl_Abstract extends Zend_Acl
+abstract class ZendSF_Acl_Abstract extends Zend_Acl
 {
     public function __construct()
     {
@@ -65,4 +65,3 @@ class ZendSF_Acl_Abstract extends Zend_Acl
 
     }
 }
-?>

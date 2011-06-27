@@ -227,4 +227,3 @@ class ZendSF_Form_Abstract extends Zend_Form
         return $this->_model;
     }
 }
-?>

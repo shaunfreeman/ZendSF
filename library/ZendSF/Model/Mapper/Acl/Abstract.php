@@ -51,85 +51,13 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     protected $_identity;
 
     /**
-     * Checks wheather user is allowed to find a single record by it's id.
-     *
-     * @param int $id
-     */
-    public function find($id)
-    {
-        if (!$this->checkAcl('find')) {
-            throw new ZendSF_Acl_Exception("Insufficient rights");
-        }
-
-        return parent::find($id);
-    }
-
-    /**
-     * Checks wheather user is allowed to fetch all
-     * entries in table or from a select object.
-     *
-     * @param object $select dbTable select object
-     * @return array ZendSF_Model_Abstract
-     */
-    public function fetchAll($select = null)
-    {
-        if (!$this->checkAcl('fetchAll')) {
-            throw new ZendSF_Acl_Exception("Insufficient rights");
-        }
-
-        return parent::fetchAll($select);
-    }
-
-    /**
-     * Checks wheather user is allowed to fetch one row from database.
-     *
-     * @param object $select dbTable select object
-     * @param bool $raw Weather to retrun the model class or Zend_Db_Table_Abstract
-     */
-    public function fetchRow($select, $raw = false)
-    {
-        if (!$this->checkAcl('fetchRow')) {
-            throw new ZendSF_Acl_Exception("Insufficient rights");
-        }
-
-        return parent::fetchRow($select, $raw);
-    }
-
-    /**
-     * Checks wheather user is allowed to save a row to database
-     *
-     * @param ZendSF_Model_Abstract $model
-     */
-    public function save(ZendSF_Model_Abstract $model)
-    {
-        if (!$this->checkAcl('save')) {
-            throw new ZendSF_Acl_Exception("Insufficient rights");
-        }
-
-        return parent::save($model);
-    }
-
-    /**
-     * Checks wheather user is allowed to delete records from database.
-     *
-     * @param string $where clause for record deletion
-     */
-    public function delete($where)
-    {
-        if (!$this->checkAcl('delete')) {
-            throw new ZendSF_Acl_Exception("Insufficient rights");
-        }
-
-        return parent::delete($where);
-    }
-
-    /**
      * Implement the Zend_Acl_Resource_Interface, make this model
      * an acl resource
      *
      * @return string
      */
-    public function  getResourceId() {
+    public function  getResourceId()
+    {
         return $this->_modelClass;
     }
 
@@ -238,4 +166,3 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
         return $this->_acl;
     }
 }
-?>

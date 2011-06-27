@@ -41,5 +41,3 @@ class ZendSF_Acl_Exception extends ZendSF_Exception
 {
     //put your code here
 }
-
-?>

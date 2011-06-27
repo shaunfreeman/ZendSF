@@ -146,4 +146,3 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
         return $this->isAllowed($resource, $privilege);
     }
 }
-?>

@@ -48,7 +48,6 @@ class ZendSF_Filter_HtmlPurifier implements Zend_Filter_Interface
      * Constructor
      *
      * @param mixed $config
-     * @return void
      */
     public function __construct($config = null)
     {
@@ -73,5 +72,3 @@ class ZendSF_Filter_HtmlPurifier implements Zend_Filter_Interface
         return $this->_instance->purify($value);
     }
 }
-
-?>

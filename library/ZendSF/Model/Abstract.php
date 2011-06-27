@@ -140,4 +140,3 @@ abstract class ZendSF_Model_Abstract
         return $array;
     }
 }
-?>

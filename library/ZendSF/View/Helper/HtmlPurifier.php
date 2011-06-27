@@ -1,6 +1,6 @@
 <?php
 /**
- * Passowrd.php
+ * SfMenu.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -21,43 +21,33 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Utility
+ * @subpackage View_Helper
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Utility Class to hash or encrypt passwords.
+ * Description of ZendSF_View_Helper_HtmlPurifier
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Utility
+ * @subpackage View_Helper
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Utility_Password
+class ZendSF_View_Helper_HtmlPurifier extends Zend_View_Helper_Abstract
 {
     /**
-     * Creates a sha1 hash.
-     *
-     * @param string $hash
-     * @return string
+     * Returns the string $ value, purified by HTMLPurifier
+     * @ param string $ value
+     * @ param mixed $ config
+     * @ return string
      */
-    public static function sha1($hash)
+    public function HtmlPurifier($value , $config = null)
     {
-        return sha1($hash);
-    }
-
-    /**
-     * Creates a md5 hash.
-     *
-     * @param string $hash
-     * @return string
-     */
-    public static function md5($hash)
-    {
-        return md5($hash);
+        $filter  =  new ZendSF_Filter_HtmlPurifier($config);
+        return  $filter->filter($value);
     }
 }

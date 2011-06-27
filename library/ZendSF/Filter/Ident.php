@@ -66,5 +66,3 @@ class ZendSF_Filter_Ident implements Zend_Filter_Interface
         return rtrim( $new, '-' );
     }
 }
-
-?>

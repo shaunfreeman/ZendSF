@@ -40,4 +40,3 @@ class ZendSF_Exception_404 extends ZendSF_Exception
 {
 
 }
-?>
