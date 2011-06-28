@@ -45,6 +45,11 @@ abstract class ZendSF_Model_Abstract
     protected $_classMethods;
 
     /**
+     * @var string format for Zend_Date
+     */
+    protected $_dateFormat = null;
+
+    /**
      * Constructor
      *
      * @param array|Zend_Db_Table_Abstract|null $options
@@ -130,7 +135,7 @@ abstract class ZendSF_Model_Abstract
                 }
 
                 if ($value instanceof Zend_Date) {
-                    $value = $value->getTimestamp();
+                    $value = $value->toString($this->_dateFormat);
                 }
 
                 $array[lcfirst(substr($method,3))] = $value;

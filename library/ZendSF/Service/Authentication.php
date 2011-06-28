@@ -71,7 +71,7 @@ class ZendSF_Service_Authentication
         $this->_options = Zend_Registry::get('config')
                     ->user
                     ->auth;
-        
+
         $this->_userModel = (null === $userModel) ?
                 new Core_Model_Mapper_User() : $userModel;
     }

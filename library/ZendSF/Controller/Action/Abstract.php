@@ -39,13 +39,23 @@
  */
 abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
 {
+    /**
+     * @var ZendSF_Service_Authentication
+     */
     protected $_authService;
+
+    /**
+     * @var ZendSF_Model_Mapper_Abstract
+     */
     protected $_model;
-    protected $_forms;
+
+    /**
+     * @var Zend_Log
+     */
     protected $_log;
 
     /**
-     * @var object Zend_Controller_Action_Helper_FlashMessenger
+     * @var Zend_Controller_Action_Helper_FlashMessenger
      */
     protected $_flashMessenger;
 
@@ -67,20 +77,26 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     }
 
     /**
-     * Sets a Form
+     * Sets a form to use via view
      *
-     * @param string $name
-     * @param array  $action
+     * @param string $formName
+     * @param array $action
      * @param string $route
      * @param string $method
+     * @return ZendSF_Controller_Action_Abstract
      */
-    protected function setForm($name, $action, $route = 'default', $method = 'post')
+    protected function setForm($formName, $action, $route = 'default', $method = 'post')
     {
         $urlHelper = $this->_helper->getHelper('url');
 
-        $this->view->$formName = new $class($this->_modelClass);
+        $formViewName = $formName . 'Form';
 
-        $this->view->$formName->setAction($urlHelper->url($action, $route));
-        $this->view->$formName->setMethod($method);
+        $this->view->$formViewName = $this->_model->getForm($formName);
+
+        $this->view->$formViewName->setAction($urlHelper->url($action, $route));
+
+        $this->view->$formViewName->setMethod($method);
+
+        return $this;
     }
 }
