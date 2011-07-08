@@ -11,7 +11,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Uthando-CMS is distributed in the hope that it will be useful,
+ * ZendSF is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -46,19 +46,43 @@ abstract class ZendSF_Model_Mapper_Abstract
     protected $_dbTable;
 
     /**
-     * @var string DbTable class name
+     * @var string the DbTable class name
      */
     protected $_dbTableClass;
 
     /**
-     * @var sting model class name
+     * @var sting the model class name
      */
     protected $_modelClass;
+
+    /**
+     * @var array the model namespace split into an array
+     */
+    protected $_namespace;
 
     /**
      * @var array Form instances
      */
     protected $_forms = array();
+
+    public function __construct()
+    {
+        $this->_namespace = $this->_getNamespace();
+
+        $this->_dbTableClass = join('_', array(
+            $this->_namespace[0],
+            'Model_DbTable',
+            end($this->_namespace)
+        ));
+
+        $this->_modelClass = join('_', array(
+            $this->_namespace[0],
+            'Model',
+            end($this->_namespace)
+        ));
+
+        $this->setDbTable($this->_dbTableClass);
+    }
 
     /**
      * Sets the database table object.
@@ -118,16 +142,22 @@ abstract class ZendSF_Model_Mapper_Abstract
      * @param object $select dbTable select object
      * @return array ZendSF_Model_Abstract
      */
-    public function fetchAll($select = null)
+    public function fetchAll($select = null, $raw = false)
     {
         $resultSet = $this->getDbTable()->fetchAll($select);
-        $entries = array();
 
-        foreach ($resultSet as $row) {
-            $entries[] = new $this->_modelClass($row);
+        if (!$raw) {
+            $rows = array();
+
+            foreach ($resultSet as $row) {
+                $rows[] = new $this->_modelClass($row);
+            }
+
+            $resultSet = $rows;
+            unset($rows);
         }
 
-        return $entries;
+        return $resultSet;
     }
 
     /**
@@ -135,7 +165,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      *
      * @param object $select dbTable select object
      * @param bool $raw Weather to retrun the model class or Zend_Db_Table_Abstract
-     * @return ZendSF_Model_DbTable_Abstract|Zend_Db_Table_Row_Abstract|null
+     * @return ZendSF_Model_Abstract|Zend_Db_Table_Row_Abstract|null
      */
     public function fetchRow($select, $raw = false)
     {
@@ -164,6 +194,8 @@ abstract class ZendSF_Model_Mapper_Abstract
         foreach ($data as $key => $value) {
             if (!in_array($key, $cols)) {
                 unset($data[$key]);
+            } elseif (!$value) {
+                unset($data[$key]);
             }
         }
 
@@ -171,7 +203,9 @@ abstract class ZendSF_Model_Mapper_Abstract
             unset($data[$primary]);
             return $this->getDbTable()->insert($data);
         } else {
-            return $this->getDbTable()->update($data, array($primary . ' = ?' => $id));
+            return $this->getDbTable()->update($data, array(
+                $primary . ' = ?' => $id
+            ));
         }
     }
 
@@ -196,11 +230,11 @@ abstract class ZendSF_Model_Mapper_Abstract
     {
         if (!isset($this->_forms[$name])) {
             $class = join('_', array(
-                    $this->_getNamespace(),
+                    $this->_namespace[0],
                     'Form',
                     $this->_getInflected($name)
             ));
-            $this->_forms[$name] = new $class();
+            $this->_forms[$name] = new $class(array('model' => $this));
         }
 	    return $this->_forms[$name];
     }
@@ -211,10 +245,10 @@ abstract class ZendSF_Model_Mapper_Abstract
      *
      * @return string This class namespace
      */
-    protected function _getNamespace()
+    private function _getNamespace()
     {
         $ns = explode('_', get_class($this));
-        return $ns[0];
+        return $ns;
     }
 
     /**

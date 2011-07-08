@@ -3,7 +3,7 @@
   <html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<!-- template designed by Marco Von Ballmoos -->
-			<title>Docs For Class ZendSF_Filter_HtmlPurifier</title>
+			<title>Docs For Class ZendSF_View_Helper_AuthInfo</title>
 			<link rel="stylesheet" href="../../media/stylesheet.css" />
 			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
 		</head>
@@ -12,7 +12,7 @@
 <h2 class="class-name"><img src="../../media/images/Class_logo.png"
 														alt=" Class"
 														title=" Class"
-														style="vertical-align: middle"> ZendSF_Filter_HtmlPurifier</h2>
+														style="vertical-align: middle"> ZendSF_View_Helper_AuthInfo</h2>
 
 <a name="sec-description"></a>
 <div class="info-box">
@@ -25,18 +25,20 @@
 					</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Uses HtmlPurifier to make text inputs safe.</p>
+<p class="short-description">Access authentication data saved in the session.</p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Shaun Freeman &lt;<a href="mailto:shaun@shaunfreeman.co.uk">shaun@shaunfreeman.co.uk</a>&gt;</li>
 				<li><span class="field">copyright:</span> Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)</li>
 				<li><span class="field">license:</span> <a href="http://www.gnu.org/licenses">GNU General Public License</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_library---ZendSF---Filter---HtmlPurifier.php.html">/library/ZendSF/Filter/HtmlPurifier.php</a> (line <span class="field">40</span>)
+			Located in <a class="field" href="_library---ZendSF---View---Helper---AuthInfo.php.html">/library/ZendSF/View/Helper/AuthInfo.php</a> (line <span class="field">40</span>)
 		</p>
 		
 				
-		<pre></pre>
+		<pre>Zend_View_Helper_Abstract
+   |
+   --ZendSF_View_Helper_AuthInfo</pre>
 	
 			</div>
 </div>
@@ -57,8 +59,8 @@
 			<div class="var-summary">
 																								<div class="var-title">
 					<img src="../../media/images/Variable.png" alt=" " />
-					<span class="var-type">HTMLPurifier</span>
-					<a href="#$_instance" title="details" class="var-name">$_instance</a>
+					<span class="var-type">Core_Service_Authentication</span>
+					<a href="#$_authService" title="details" class="var-name">$_authService</a>
 				</div>
 											</div>
 		</div>
@@ -77,16 +79,16 @@
 		<div class="info-box-body">			
 			<div class="method-summary">
 																																<div class="method-definition">
-					<img src="../../media/images/Constructor.png" alt=" "/>
-											<span class="method-result">ZendSF_Filter_HtmlPurifier</span>
-										<a href="#__construct" title="details" class="method-name">__construct</a>
-											([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$config</span> = <span class="var-default">null</span>])
+					<img src="../../media/images/Method.png" alt=" "/>
+											<span class="method-result">string|Zend_View_Helper_AuthInfo</span>
+										<a href="#authInfo" title="details" class="method-name">authInfo</a>
+											([<span class="var-type">string|null</span>&nbsp;<span class="var-name">$info</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
-											<span class="method-result">string</span>
-										<a href="#filter" title="details" class="method-name">filter</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+											<span class="method-result">bool</span>
+										<a href="#isLoggedIn" title="details" class="method-name">isLoggedIn</a>
+											(<span class="var-type">none</span>&nbsp;<span class="var-name">0</span>)
 									</div>
 											</div>
 		</div>
@@ -106,21 +108,20 @@
 					</div>
 		<div class="info-box-body">
 			
-<a name="var$_instance" id="$_instance"><!-- --></A>
+<a name="var$_authService" id="$_authService"><!-- --></A>
 <div class="evenrow">
 
 	<div class="var-header">
 		<img src="../../media/images/Variable.png" />
 		<span class="var-title">
-			<span class="var-type">HTMLPurifier</span>
-			<span class="var-name">$_instance</span>
+			<span class="var-type">Core_Service_Authentication</span>
+			<span class="var-name">$_authService</span>
 						(line <span class="line-number">45</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
 	<ul class="tags">
-				<li><span class="field">var:</span> The HTMLPurifier instance</li>
 				<li><span class="field">access:</span> protected</li>
 			</ul>
 	
@@ -144,63 +145,63 @@
 		</div>
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
-<a name="method__construct" id="__construct"><!-- --></a>
+<a name="methodauthInfo" id="authInfo"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<img src="../../media/images/Constructor.png" />
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">52</span>)
+		<img src="../../media/images/Method.png" />
+		<span class="method-title">authInfo</span> (line <span class="line-number">54</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Constructor</p>
+<p class="short-description">Get user info from the auth session</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">ZendSF_Filter_HtmlPurifier</span>
+		<span class="method-result">string|Zend_View_Helper_AuthInfo</span>
 		<span class="method-name">
-			__construct
+			authInfo
 		</span>
-					([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$config</span> = <span class="var-default">null</span>])
+					([<span class="var-type">string|null</span>&nbsp;<span class="var-name">$info</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type">mixed</span>
-				<span class="var-name">$config</span>			</li>
+				<span class="var-type">string|null</span>
+				<span class="var-name">$info</span><span class="var-description">: The data to fetch, null to chain</span>			</li>
 				</ul>
 		
 			
 	</div>
-<a name="methodfilter" id="filter"><!-- --></a>
+<a name="methodisLoggedIn" id="isLoggedIn"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">filter</span> (line <span class="line-number">70</span>)
+		<span class="method-title">isLoggedIn</span> (line <span class="line-number">78</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Defined by Zend_Filter_Interface</p>
-<p class="description"><p>Returns the string $value, purified by HTMLPurifier</p></p>
+<p class="short-description">Returns wheather user is logged in.</p>
 	<ul class="tags">
+				<li><span class="field">return:</span> true|false</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">string</span>
+		<span class="method-result">bool</span>
 		<span class="method-name">
-			filter
+			isLoggedIn
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+					(<span class="var-type">none</span>&nbsp;<span class="var-name">0</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-type">none</span>
+				<span class="var-name">0</span>			</li>
 				</ul>
 		
 			

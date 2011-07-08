@@ -84,35 +84,11 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																								<div class="method-definition">
+																																																																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
 											<span class="method-result">boolean</span>
 										<a href="#checkAcl" title="details" class="method-name">checkAcl</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
-									</div>
-																<div class="method-definition">
-					<img src="../../media/images/Method.png" alt=" "/>
-											<span class="method-result">void</span>
-										<a href="#delete" title="details" class="method-name">delete</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$where</span>)
-									</div>
-																<div class="method-definition">
-					<img src="../../media/images/Method.png" alt=" "/>
-											<span class="method-result">array</span>
-										<a href="#fetchAll" title="details" class="method-name">fetchAll</a>
-											([<span class="var-type">object</span>&nbsp;<span class="var-name">$select</span> = <span class="var-default">null</span>])
-									</div>
-																<div class="method-definition">
-					<img src="../../media/images/Method.png" alt=" "/>
-											<span class="method-result">void</span>
-										<a href="#fetchRow" title="details" class="method-name">fetchRow</a>
-											(<span class="var-type">object</span>&nbsp;<span class="var-name">$select</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$raw</span> = <span class="var-default">false</span>])
-									</div>
-																<div class="method-definition">
-					<img src="../../media/images/Method.png" alt=" "/>
-											<span class="method-result">void</span>
-										<a href="#find" title="details" class="method-name">find</a>
-											(<span class="var-type">int</span>&nbsp;<span class="var-name">$id</span>)
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
@@ -131,12 +107,6 @@
 											<span class="method-result">string</span>
 										<a href="#getResourceId" title="details" class="method-name">getResourceId</a>
 										()
-									</div>
-																<div class="method-definition">
-					<img src="../../media/images/Method.png" alt=" "/>
-											<span class="method-result">void</span>
-										<a href="#save" title="details" class="method-name">save</a>
-											(<span class="var-type"><a href="../../ZendSF/Model/ZendSF_Model_Abstract.html">ZendSF_Model_Abstract</a></span>&nbsp;<span class="var-name">$model</span>)
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
@@ -169,7 +139,7 @@
 		<div class="info-box-body">
 			
 <a name="var$_acl" id="$_acl"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<img src="../../media/images/Variable.png" />
@@ -191,7 +161,7 @@
 
 </div>
 <a name="var$_identity" id="$_identity"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<img src="../../media/images/Variable.png" />
@@ -232,6 +202,10 @@
 							<span class="var-title">
 								<span class="var-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#var$_modelClass">ZendSF_Model_Mapper_Abstract::$_modelClass</a></span><br>
 							</span>
+													<img src="../../media/images/Variable.png" />
+							<span class="var-title">
+								<span class="var-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#var$_namespace">ZendSF_Model_Mapper_Abstract::$_namespace</a></span><br>
+							</span>
 											</blockquote> 
 										
 		</div>
@@ -249,11 +223,11 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 <a name="methodcheckAcl" id="checkAcl"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">checkAcl</span> (line <span class="line-number">191</span>)
+		<span class="method-title">checkAcl</span> (line <span class="line-number">121</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -278,160 +252,12 @@
 		
 			
 	</div>
-<a name="methoddelete" id="delete"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<img src="../../media/images/Method.png" />
-		<span class="method-title">delete</span> (line <span class="line-number">117</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Checks wheather user is allowed to delete records from database.</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			delete
-		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$where</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$where</span><span class="var-description">: clause for record deletion</span>			</li>
-				</ul>
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methoddelete">ZendSF_Model_Mapper_Abstract::delete()</a></dt>
-						<dd>Deletes records from database.</dd>
-					</dl>
-			
-	</div>
-<a name="methodfetchAll" id="fetchAll"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<img src="../../media/images/Method.png" />
-		<span class="method-title">fetchAll</span> (line <span class="line-number">74</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Checks wheather user is allowed to fetch all  entries in table or from a select object.</p>
-	<ul class="tags">
-				<li><span class="field">return:</span> ZendSF_Model_Abstract</li>
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">array</span>
-		<span class="method-name">
-			fetchAll
-		</span>
-					([<span class="var-type">object</span>&nbsp;<span class="var-name">$select</span> = <span class="var-default">null</span>])
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">object</span>
-				<span class="var-name">$select</span><span class="var-description">: dbTable select object</span>			</li>
-				</ul>
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methodfetchAll">ZendSF_Model_Mapper_Abstract::fetchAll()</a></dt>
-						<dd>Fetches all entries in table or from a select object.</dd>
-					</dl>
-			
-	</div>
-<a name="methodfetchRow" id="fetchRow"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<img src="../../media/images/Method.png" />
-		<span class="method-title">fetchRow</span> (line <span class="line-number">89</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Checks wheather user is allowed to fetch one row from database.</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			fetchRow
-		</span>
-					(<span class="var-type">object</span>&nbsp;<span class="var-name">$select</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$raw</span> = <span class="var-default">false</span>])
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">object</span>
-				<span class="var-name">$select</span><span class="var-description">: dbTable select object</span>			</li>
-					<li>
-				<span class="var-type">bool</span>
-				<span class="var-name">$raw</span><span class="var-description">: Weather to retrun the model class or Zend_Db_Table_Abstract</span>			</li>
-				</ul>
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methodfetchRow">ZendSF_Model_Mapper_Abstract::fetchRow()</a></dt>
-						<dd>Fetches one row from database.</dd>
-					</dl>
-			
-	</div>
-<a name="methodfind" id="find"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<img src="../../media/images/Method.png" />
-		<span class="method-title">find</span> (line <span class="line-number">58</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Checks wheather user is allowed to find a single record by it's id.</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			find
-		</span>
-					(<span class="var-type">int</span>&nbsp;<span class="var-name">$id</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">int</span>
-				<span class="var-name">$id</span>			</li>
-				</ul>
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methodfind">ZendSF_Model_Mapper_Abstract::find()</a></dt>
-						<dd>Finds a single record by it's id.</dd>
-					</dl>
-			
-	</div>
 <a name="methodgetAcl" id="getAcl"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">getAcl</span> (line <span class="line-number">227</span>)
+		<span class="method-title">getAcl</span> (line <span class="line-number">157</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -452,11 +278,11 @@
 			
 	</div>
 <a name="methodgetIdentity" id="getIdentity"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">getIdentity</span> (line <span class="line-number">170</span>)
+		<span class="method-title">getIdentity</span> (line <span class="line-number">100</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -477,11 +303,11 @@
 			
 	</div>
 <a name="methodgetResourceId" id="getResourceId"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">getResourceId</span> (line <span class="line-number">132</span>)
+		<span class="method-title">getResourceId</span> (line <span class="line-number">59</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -501,48 +327,12 @@
 		
 			
 	</div>
-<a name="methodsave" id="save"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<img src="../../media/images/Method.png" />
-		<span class="method-title">save</span> (line <span class="line-number">103</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Checks wheather user is allowed to save a row to database</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			save
-		</span>
-					(<span class="var-type"><a href="../../ZendSF/Model/ZendSF_Model_Abstract.html">ZendSF_Model_Abstract</a></span>&nbsp;<span class="var-name">$model</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"><a href="../../ZendSF/Model/ZendSF_Model_Abstract.html">ZendSF_Model_Abstract</a></span>
-				<span class="var-name">$model</span>			</li>
-				</ul>
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methodsave">ZendSF_Model_Mapper_Abstract::save()</a></dt>
-						<dd>Saves a row to database</dd>
-					</dl>
-			
-	</div>
 <a name="methodsetAcl" id="setAcl"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">setAcl</span> (line <span class="line-number">210</span>)
+		<span class="method-title">setAcl</span> (line <span class="line-number">140</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -562,7 +352,7 @@
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type">Zend_Acl_Resource_Interface</span>
+				<span class="var-type">Zend_Acl</span>
 				<span class="var-name">$acl</span>			</li>
 				</ul>
 		
@@ -573,12 +363,13 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">setIdentity</span> (line <span class="line-number">142</span>)
+		<span class="method-title">setIdentity</span> (line <span class="line-number">71</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Set the identity of the current request</p>
 	<ul class="tags">
+				<li><span class="field">todo:</span> move this method to ZendSF_Acl_Absract</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -603,6 +394,8 @@
 									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html">ZendSF_Model_Mapper_Abstract</a></span></p>
 					<blockquote>
+													<img src="../../media/images/Constructor.png" alt=" "/>
+							<span class="method-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#method__construct">ZendSF_Model_Mapper_Abstract::__construct()</a></span><br>
 													<img src="../../media/images/Method.png" alt=" "/>
 							<span class="method-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methoddelete">ZendSF_Model_Mapper_Abstract::delete()</a></span><br>
 													<img src="../../media/images/Method.png" alt=" "/>
@@ -619,6 +412,8 @@
 							<span class="method-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methodsave">ZendSF_Model_Mapper_Abstract::save()</a></span><br>
 													<img src="../../media/images/Method.png" alt=" "/>
 							<span class="method-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#methodsetDbTable">ZendSF_Model_Mapper_Abstract::setDbTable()</a></span><br>
+													<img src="../../media/images/Method.png" alt=" "/>
+							<span class="method-name"><a href="../../ZendSF/Model_Mapper/ZendSF_Model_Mapper_Abstract.html#method_getInflected">ZendSF_Model_Mapper_Abstract::_getInflected()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -626,7 +421,7 @@
 
 	
 	<p class="notes" id="credit">
-		Documentation generated on Wed, 15 Jun 2011 10:30:29 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Mon, 04 Jul 2011 14:21:27 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

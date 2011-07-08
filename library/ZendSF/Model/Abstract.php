@@ -45,9 +45,22 @@ abstract class ZendSF_Model_Abstract
     protected $_classMethods;
 
     /**
-     * @var string format for Zend_Date
+     * Sets the default date format to save to the database.
+     * if set to null then date format will be saved as a unix timestamp.<br />
+     * example for MySql date field<br />
+     * yyyy-MM-dd
+     *
+     * @var string|null
      */
     protected $_dateFormat = null;
+
+    /**
+     * An array of variables that do don't belong to
+     * this model but are needed in database joins
+     *
+     * @var array
+     */
+    protected $_vars = array();
 
     /**
      * Constructor
@@ -73,7 +86,8 @@ abstract class ZendSF_Model_Abstract
      * @param string $name
      * @param mixed $value
      */
-    public function  __set($name, $value) {
+    public function __set($name, $value)
+    {
        $method = 'set' . ucfirst($name);
 
         if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
@@ -89,7 +103,8 @@ abstract class ZendSF_Model_Abstract
      * @param string $name
      * @return mixed
      */
-    public function  __get($name) {
+    public function __get($name)
+    {
         $method = 'get' . ucfirst($name);
 
         if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
@@ -97,6 +112,47 @@ abstract class ZendSF_Model_Abstract
         }
 
         return $this->$method();
+    }
+
+    /**
+     * Gets and set variables that don't live in this class
+     * but are used in database joins. Has to be prefixed with either 'set' or 'get'.
+     * Example:
+     * <code>
+     * <?php
+     * // get value
+     * $user->getRole('admin');
+     *
+     * // set value
+     * $user->setRole('admin');
+     * ?>
+     * </code>
+     * @param string $name
+     * @param array $arguments
+     * @return ZendSF_Model_Abstract|mixed|ZendSF_Exception
+     */
+    public function __call($name, $arguments)
+    {
+        $prefix = substr($name, 0, 3);
+        $name = lcfirst(substr($name, 3));
+
+        switch ($prefix) {
+            case 'get':
+                return $this->_vars[$name];
+                break;
+
+            case 'set':
+                $this->_vars[$name] = (count($arguments) == 1) ?
+                    $arguments[0] : $arguments;
+                return $this;
+                break;
+
+            default:
+                throw new ZendSF_Model_Exception(
+                        'method ' . $name . ' not defined in ' . get_class($this)
+                        );
+                break;
+        }
     }
 
     /**
@@ -135,7 +191,8 @@ abstract class ZendSF_Model_Abstract
                 }
 
                 if ($value instanceof Zend_Date) {
-                    $value = $value->toString($this->_dateFormat);
+                    $value = ($this->_dateFormat === null) ?
+                            $value->getTimestamp() : $value->toString($this->_dateFormat);
                 }
 
                 $array[lcfirst(substr($method,3))] = $value;

@@ -40,7 +40,7 @@
 class ZendSF_Form_Abstract extends Zend_Form
 {
     /**
-     * @var ZendSF_Model_Abstract
+     * @var ZendSF_Model_Mapper_Abstract
      */
     protected $_model;
 
@@ -144,9 +144,9 @@ class ZendSF_Form_Abstract extends Zend_Form
      * @param string $class elements class name
      * @return ZendSF_Form_Abstract
      */
-    public function addSubmit($label, $class = '')
+    public function addSubmit($label, $name = 'submit', $class = '')
     {
-        $this->addElement('submit', 'submit', array(
+        $this->addElement('submit', $name, array(
             'ignore'        => true,
             'decorators'    => $this->_submitDecorators,
             'label'         => $label,

@@ -59,7 +59,7 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
         $acl = ucfirst($module) . '_Model_Acl_' . ucfirst($module);
 
         if (class_exists($acl)) {
-            $this->_acl = new $acl;
+            $this->_acl = new $acl();
         }
     }
 
@@ -94,6 +94,7 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
      *
      * @param array|string|null|Zend_Acl_Role_Interface $identity
      * @return ZendSF_Controller_Helper_Acl
+     * @todo move this method to ZendSF_Acl_Absract
      */
     public function setIdentity($identity)
     {
@@ -103,8 +104,8 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
             }
 
             $identity = new Zend_Acl_Role($identity['role']);
-        } elseif (is_object($identity) && is_string($identity->role)) {
-            $identity = new Zend_Acl_Role($identity->role);
+        } elseif (is_object($identity) && is_string($identity->getRole())) {
+            $identity = new Zend_Acl_Role($identity->getRole());
         } elseif (is_scalar($identity) && !is_bool($identity)) {
             $identity = new Zend_Acl_Role($identity);
         } elseif (null === $identity) {

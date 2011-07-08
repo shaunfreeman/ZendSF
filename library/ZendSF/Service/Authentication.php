@@ -73,7 +73,7 @@ class ZendSF_Service_Authentication
                     ->auth;
 
         $this->_userModel = (null === $userModel) ?
-                new Core_Model_Mapper_User() : $userModel;
+                new $this->_options->userModel() : $userModel;
     }
 
     /**
@@ -92,7 +92,7 @@ class ZendSF_Service_Authentication
             return false;
         }
 
-        $method = 'getUserBy' . ucwords($this->_options->identity);
+        $method = 'getUserBy' . ucwords($this->_options->method);
 
         $user = $this->_userModel
                 ->$method($credentials[$this->_options->identity]);
@@ -151,10 +151,6 @@ class ZendSF_Service_Authentication
         if (null === $this->_authAdapter) {
 
             $treatment = $this->_options->credentialTreatment;
-
-            //if (!method_exists(ZendSF_Utility_Password, $treatment)) {
-             //   throw new Exception('Password credential treatment needs be a valid method.');
-            //}
 
             $authAdapter = new Zend_Auth_Adapter_DbTable(
                 Zend_Db_Table_Abstract::getDefaultAdapter(),
