@@ -70,7 +70,7 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
     public function sfMenu($container = null)
     {
         $this->log = Zend_Registry::get('log');
-
+        
         if (is_string($container) &&
                 Zend_Registry::isRegistered('siteMenu' . ucfirst($container))) {
             /* @var $container Zend_Navigation */

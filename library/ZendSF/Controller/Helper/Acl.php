@@ -100,7 +100,7 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
     {
         if (is_array($identity)) {
             if (!isset($identity['role'])) {
-                $identity['role'] = 'Guest';
+                $identity['role'] = 'guest';
             }
 
             $identity = new Zend_Acl_Role($identity['role']);
@@ -109,7 +109,7 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
         } elseif (is_scalar($identity) && !is_bool($identity)) {
             $identity = new Zend_Acl_Role($identity);
         } elseif (null === $identity) {
-            $identity = new Zend_Acl_Role('Guest');
+            $identity = new Zend_Acl_Role('guest');
         } elseif (!$identity instanceof Zend_Acl_Role_Interface) {
             throw new Exception('Invalid identity provided');
         }
@@ -130,7 +130,7 @@ class ZendSF_Controller_Helper_Acl extends Zend_Controller_Action_Helper_Abstrac
             $auth = Zend_Auth::getInstance();
 
             if (!$auth->hasIdentity()) {
-                return 'Guest';
+                return 'guest';
             }
 
             $this->setIdentity($auth->getIdentity());

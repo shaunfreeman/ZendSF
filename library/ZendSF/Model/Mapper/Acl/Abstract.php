@@ -72,7 +72,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     {
         if (is_array($identity)) {
             if (!isset($identity['role'])) {
-                $identity['role'] = 'Guest';
+                $identity['role'] = 'guest';
             }
 
             $identity = new Zend_Acl_Role($identity['role']);
@@ -82,7 +82,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
         } elseif (is_scalar($identity) && !is_bool($identity)) {
             $identity = new Zend_Acl_Role($identity);
         } elseif (null === $identity) {
-            $identity = new Zend_Acl_Role('Guest');
+            $identity = new Zend_Acl_Role('guest');
         } elseif (!$identity instanceof Zend_Acl_Role_Interface) {
             throw new ZendSF_Model_Exception('Invalid identity provided');
         }
@@ -103,7 +103,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
             $auth = Zend_Auth::getInstance();
 
             if (!$auth->hasIdentity()) {
-                return 'Guest';
+                return 'guest';
             }
 
             $this->setIdentity($auth->getIdentity());

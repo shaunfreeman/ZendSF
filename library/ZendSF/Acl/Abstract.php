@@ -42,17 +42,19 @@ abstract class ZendSF_Acl_Abstract extends Zend_Acl
     {
         $this->deny();
 
-        $this->addRole(new Zend_Acl_Role('Guest'));
-        $this->addRole(new Zend_Acl_Role('Registered'));
+        $this->addRole(new Zend_Acl_Role('guest'));
+        $this->addRole(new Zend_Acl_Role('registered'));
+        $this->addRole(new Zend_Acl_Role('admin'), 'registered');
 
         $this->addResource(new Zend_Acl_Resource('Guest'));
         $this->addResource(new Zend_Acl_Resource('User'));
+        $this->addResource(new Zend_Acl_Resource('Admin'));
 
-        $this->allow('Guest', 'Guest');
-        $this->allow('Registered', 'User');
+        $this->allow('guest', 'Guest');
+        $this->allow('registered', 'User');
+        $this->allow('admin', 'Admin');
 
         $this->init();
-
     }
 
     /**

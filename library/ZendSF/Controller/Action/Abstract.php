@@ -50,12 +50,8 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     protected $_log;
 
     /**
-     * @var Zend_Controller_Action_Helper_FlashMessenger
-     */
-    protected $_flashMessenger;
-
-    /**
-     * Constructor extensions
+     * Constructor extensions.
+     * Put the navigation acl code in the bootstrap file.
      */
     public function init()
     {
@@ -64,12 +60,9 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
         // add $this->_acl here.
 
         $this->view->admin = $this->_request->getParam('isAdmin');
+
         $this->view->request = $this->_request->getParams();
 
-        $this->view->navigation()
-                ->setAcl($this->_helper->getHelper('Acl')->getAcl())
-                ->setRole($this->_helper->getHelper('Acl')->getIdentity())
-                ;
     }
 
     public function getForm($formName)
@@ -105,5 +98,11 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
         $this->view->$formViewName->setMethod($method);
 
         return $this;
+    }
+
+    public function __call($methodName, $args)
+    {
+       $this->_log->info(__METHOD__);
+       throw new ZendSF_Exception_404('Page not found');
     }
 }

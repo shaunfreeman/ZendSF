@@ -48,7 +48,7 @@ class ZendSF_Controller_Plugin_AdminContext extends Zend_Controller_Plugin_Abstr
     {
         if ($request->getParam('isAdmin')) {
             $layout = Zend_Layout::getMvcInstance();
-            $layout->setLayout('/admin/layout');
+            $layout->setLayout('admin');
         }
     }
 }

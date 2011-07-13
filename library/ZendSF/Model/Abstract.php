@@ -90,9 +90,9 @@ abstract class ZendSF_Model_Abstract
     {
        $method = 'set' . ucfirst($name);
 
-        if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
-            throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
-        }
+        //if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
+            //throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
+        //}
 
         $this->$method($value);
     }
@@ -107,9 +107,9 @@ abstract class ZendSF_Model_Abstract
     {
         $method = 'get' . ucfirst($name);
 
-        if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
-            throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
-        }
+        //if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
+            //throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
+        //}
 
         return $this->$method();
     }
@@ -165,20 +165,21 @@ abstract class ZendSF_Model_Abstract
     {
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $this->_classMethods)) {
+            //if (in_array($method, $this->_classMethods)) {
                 $this->$method($value);
-            }
+            //}
         }
 
         return $this;
     }
 
     /**
-     * Turns class values into an array.
+     * turns the model into an array of values.
      *
+     * @param string $dateFormat
      * @return array
      */
-    public function toArray()
+    public function toArray($dateFormat = null)
     {
         $array = array();
 
@@ -191,8 +192,13 @@ abstract class ZendSF_Model_Abstract
                 }
 
                 if ($value instanceof Zend_Date) {
-                    $value = ($this->_dateFormat === null) ?
-                            $value->getTimestamp() : $value->toString($this->_dateFormat);
+                    if ($this->_dateFormat === null) {
+                        $value = $value->getTimestamp();
+                    } elseif ($dateFormat) {
+                        $value = $value->toString($dateFormat);
+                    } else {
+                        $value = $value->toString($this->_dateFormat);
+                    }
                 }
 
                 $array[lcfirst(substr($method,3))] = $value;
