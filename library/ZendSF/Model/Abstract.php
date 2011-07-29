@@ -40,9 +40,12 @@
 abstract class ZendSF_Model_Abstract
 {
     /**
-     * @var array Class methods
+     * This object holds all data from joins that
+     * do not normally live in this data model.
+     *
+     * @var object
      */
-    protected $_classMethods;
+    protected $_data;
 
     /**
      * Sets the default date format to save to the database.
@@ -55,12 +58,11 @@ abstract class ZendSF_Model_Abstract
     protected $_dateFormat = null;
 
     /**
-     * An array of variables that do don't belong to
-     * this model but are needed in database joins
+     * Database table prefix.
      *
-     * @var array
+     * @var string
      */
-    protected $_vars = array();
+    protected $_prefix;
 
     /**
      * Constructor
@@ -69,7 +71,7 @@ abstract class ZendSF_Model_Abstract
      */
     public function __construct($options = null)
     {
-        $this->_classMethods = get_class_methods($this);
+
 
         if ($options instanceof Zend_Db_Table_Row) {
             $options = $options->toArray();
@@ -83,18 +85,18 @@ abstract class ZendSF_Model_Abstract
     /**
      * Sets the property in this class.
      *
-     * @param string $name
+     * @param string $key
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set($key, $value)
     {
-       $method = 'set' . ucfirst($name);
-
-        //if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
-            //throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
-        //}
-
-        $this->$method($value);
+       if (method_exists($this, 'set' . ucfirst($key))) {
+            $method = 'set' . ucfirst($key);
+            return $this->$method($value);
+        } else {
+            $this->_data->$key = $value;
+            return $this->_data->$key;
+        }
     }
 
     /**
@@ -103,18 +105,17 @@ abstract class ZendSF_Model_Abstract
      * @param string $name
      * @return mixed
      */
-    public function __get($name)
+    public function __get($key)
     {
-        $method = 'get' . ucfirst($name);
-
-        //if (('mapper' == $name) || !in_array($method, $this->_classMethods)) {
-            //throw new ZendSF_Model_Exception('Invalid ' . $name . ' property');
-        //}
-
-        return $this->$method();
+        if (method_exists($this, 'get' . ucfirst($key))) {
+            $method = 'get' . ucfirst($key);
+            return $this->$method();
+        } else {
+            return $this->_data->$key;
+        }
     }
 
-    /**
+     /**
      * Gets and set variables that don't live in this class
      * but are used in database joins. Has to be prefixed with either 'set' or 'get'.
      * Example:
@@ -131,6 +132,7 @@ abstract class ZendSF_Model_Abstract
      * @param array $arguments
      * @return ZendSF_Model_Abstract|mixed|ZendSF_Exception
      */
+
     public function __call($name, $arguments)
     {
         $prefix = substr($name, 0, 3);
@@ -138,11 +140,11 @@ abstract class ZendSF_Model_Abstract
 
         switch ($prefix) {
             case 'get':
-                return $this->_vars[$name];
+                return $this->_data->$name;
                 break;
 
             case 'set':
-                $this->_vars[$name] = (count($arguments) == 1) ?
+                $this->_data->$name = (count($arguments) == 1) ?
                     $arguments[0] : $arguments;
                 return $this;
                 break;
@@ -163,11 +165,10 @@ abstract class ZendSF_Model_Abstract
      */
     public function setOptions(array $options)
     {
+        // remove the table prefix and set the value.
         foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            //if (in_array($method, $this->_classMethods)) {
-                $this->$method($value);
-            //}
+            $key = str_replace($this->_prefix, '', $key);
+            $this->$key = $value;
         }
 
         return $this;
@@ -183,26 +184,26 @@ abstract class ZendSF_Model_Abstract
     {
         $array = array();
 
-        foreach ($this->_classMethods as $method) {
-            if (substr($method, 0, 3) == 'get') {
-                $value = $this->$method();
+        foreach ($this->_data as $key => $value) {
 
-                if ($value instanceof Zend_Currency) {
-                    $value = $value->getValue();
-                }
-
-                if ($value instanceof Zend_Date) {
-                    if ($this->_dateFormat === null) {
-                        $value = $value->getTimestamp();
-                    } elseif ($dateFormat) {
-                        $value = $value->toString($dateFormat);
-                    } else {
-                        $value = $value->toString($this->_dateFormat);
-                    }
-                }
-
-                $array[lcfirst(substr($method,3))] = $value;
+            if ($value instanceof Zend_Currency) {
+                $value = $value->getValue();
             }
+
+            if ($value instanceof Zend_Date) {
+                if ($this->_dateFormat === null) {
+                    $value = $value->getTimestamp();
+                } elseif ($dateFormat) {
+                    $value = $value->toString($dateFormat);
+                } else {
+                    $value = $value->toString($this->_dateFormat);
+                }
+            }
+
+            // put the table prefix back.
+            $key = $this->_prefix . lcfirst($key);
+
+            $array[$key] = $value;
         }
 
         return $array;
