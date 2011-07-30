@@ -199,7 +199,7 @@ abstract class ZendSF_Model_Mapper_Abstract
             }
         }
 
-        if (null === ($id = $model->$primary)) {
+        if (null === ($id = $model->getId())) {
             unset($data[$primary]);
             return $this->getDbTable()->insert($data);
         } else {

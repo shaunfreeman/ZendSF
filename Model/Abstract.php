@@ -40,7 +40,7 @@
 abstract class ZendSF_Model_Abstract
 {
     /**
-     * This object holds all data from joins that
+     * This object holds all model data, includes joins that
      * do not normally live in this data model.
      *
      * @var object
@@ -65,14 +65,19 @@ abstract class ZendSF_Model_Abstract
     protected $_prefix;
 
     /**
+     * Primary key for this model.
+     *
+     * @var string
+     */
+    protected $_primary;
+
+    /**
      * Constructor
      *
      * @param array|Zend_Db_Table_Abstract|null $options
      */
     public function __construct($options = null)
     {
-
-
         if ($options instanceof Zend_Db_Table_Row) {
             $options = $options->toArray();
         }
@@ -115,46 +120,14 @@ abstract class ZendSF_Model_Abstract
         }
     }
 
-     /**
-     * Gets and set variables that don't live in this class
-     * but are used in database joins. Has to be prefixed with either 'set' or 'get'.
-     * Example:
-     * <code>
-     * <?php
-     * // get value
-     * $user->getRole('admin');
+    /**
+     * Gets the model id
      *
-     * // set value
-     * $user->setRole('admin');
-     * ?>
-     * </code>
-     * @param string $name
-     * @param array $arguments
-     * @return ZendSF_Model_Abstract|mixed|ZendSF_Exception
+     * @return type
      */
-
-    public function __call($name, $arguments)
+    public function getId()
     {
-        $prefix = substr($name, 0, 3);
-        $name = lcfirst(substr($name, 3));
-
-        switch ($prefix) {
-            case 'get':
-                return $this->_data->$name;
-                break;
-
-            case 'set':
-                $this->_data->$name = (count($arguments) == 1) ?
-                    $arguments[0] : $arguments;
-                return $this;
-                break;
-
-            default:
-                throw new ZendSF_Model_Exception(
-                        'method ' . $name . ' not defined in ' . get_class($this)
-                        );
-                break;
-        }
+        return $this->_data->{$this->_primary};
     }
 
     /**
@@ -167,7 +140,9 @@ abstract class ZendSF_Model_Abstract
     {
         // remove the table prefix and set the value.
         foreach ($options as $key => $value) {
-            $key = str_replace($this->_prefix, '', $key);
+            if (is_string($this->_prefix)) {
+                $key = str_replace($this->_prefix, '', $key);
+            }
             $this->$key = $value;
         }
 
@@ -191,7 +166,7 @@ abstract class ZendSF_Model_Abstract
             }
 
             if ($value instanceof Zend_Date) {
-                if ($this->_dateFormat === null) {
+                if (null === $this->_dateFormat) {
                     $value = $value->getTimestamp();
                 } elseif ($dateFormat) {
                     $value = $value->toString($dateFormat);
@@ -201,7 +176,9 @@ abstract class ZendSF_Model_Abstract
             }
 
             // put the table prefix back.
-            $key = $this->_prefix . lcfirst($key);
+            if (is_string($this->_prefix)) {
+                $key = $this->_prefix . lcfirst($key);
+            }
 
             $array[$key] = $value;
         }
