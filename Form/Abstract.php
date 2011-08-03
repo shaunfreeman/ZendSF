@@ -105,6 +105,27 @@ class ZendSF_Form_Abstract extends Zend_Form
         )
     );
 
+    protected $_fileDecorators = array(
+        'File',
+        'Errors',
+        'Description',
+        array(
+            array('data' => 'HtmlTag'),
+            array(
+                'tag' => 'p',
+                'class' => 'element'
+            )
+        ),
+        array(
+            'Label',
+            array('tag' => 'p')
+        ),
+        array(
+            array('row' => 'HtmlTag'),
+            array('tag' => 'div')
+        )
+    );
+
     protected $_hashDecorators = array(
         'ViewHelper',
         array(
