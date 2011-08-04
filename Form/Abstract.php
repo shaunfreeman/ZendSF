@@ -229,6 +229,22 @@ class ZendSF_Form_Abstract extends Zend_Form
     }
 
     /**
+     * Excludes the email from validating against the database.
+     *
+     * @param string $email
+     * @return ZendSF_Form_Abstract
+     * @access public
+     */
+    public function excludeEmailFromValidation($element, $exclude)
+    {
+        $val = $this->getElement($element)
+                ->getValidator('Db_NoRecordExists')
+                ->setExclude($exclude);
+        
+        return $this;
+    }
+
+    /**
      * Model setter
      *
      * @param ZendSF_Model_Abstract
