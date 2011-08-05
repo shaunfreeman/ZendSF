@@ -37,7 +37,7 @@
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Form_Abstract extends Zend_Form
+class ZendSF_Form_Abstract extends Zend_Dojo_Form
 {
     /**
      * @var ZendSF_Model_Mapper_Abstract
@@ -85,7 +85,7 @@ class ZendSF_Form_Abstract extends Zend_Form
      * @var array
      */
     protected $_elementDecorators = array(
-        'ViewHelper',
+        'DijitElement',
         'Errors',
         'Description',
         array(
@@ -240,7 +240,7 @@ class ZendSF_Form_Abstract extends Zend_Form
         $val = $this->getElement($element)
                 ->getValidator('Db_NoRecordExists')
                 ->setExclude($exclude);
-        
+
         return $this;
     }
 
