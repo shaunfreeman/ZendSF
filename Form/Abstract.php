@@ -101,7 +101,10 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
         ),
         array(
             array('row' => 'HtmlTag'),
-            array('tag' => 'div')
+            array(
+                'tag' => 'div',
+                'class' => 'form_row'
+            )
         )
     );
 
