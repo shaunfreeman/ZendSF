@@ -76,7 +76,7 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
                 'class' => 'zend_form'
             )
         ),
-        'Form'
+        'DijitForm'
     );
 
     /**
@@ -146,10 +146,10 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
     );
 
     protected $_submitDecorators = array(
-        'ViewHelper',
+        'DijitElement',
         array(
             'HtmlTag',
-            array('tag' => 'div')
+            array('tag' => 'span')
         )
     );
 
@@ -170,8 +170,9 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
      */
     public function addSubmit($label, $name = 'submit', $class = '')
     {
-        $this->addElement('submit', $name, array(
+        $this->addElement('SubmitButton', $name, array(
             'ignore'        => true,
+            'required'      => false,
             'decorators'    => $this->_submitDecorators,
             'label'         => $label,
             'attribs'       => array ('class' => $class)
