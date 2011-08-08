@@ -165,17 +165,17 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
      * Constructs a submit button.
      *
      * @param string $label
-     * @param string $class elements class name
+     * @param string $attribs elements attributes
      * @return ZendSF_Form_Abstract
      */
-    public function addSubmit($label, $name = 'submit', $class = '')
+    public function addSubmit($label, $name = 'submit', $attribs = array())
     {
         $this->addElement('SubmitButton', $name, array(
             'ignore'        => true,
             'required'      => false,
             'decorators'    => $this->_submitDecorators,
             'label'         => $label,
-            'attribs'       => array ('class' => $class)
+            'attribs'       => $attribs
         ));
 
        return $this;
