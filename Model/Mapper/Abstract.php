@@ -249,7 +249,7 @@ abstract class ZendSF_Model_Mapper_Abstract
             )
         );
 
-        if (count($fromParts) > 1) {
+        if (count($fromParts) > 0) {
             foreach($fromParts as $part) {
                 $count->join(
                     $part['tableName'],
