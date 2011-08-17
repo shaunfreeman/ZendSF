@@ -50,6 +50,13 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     protected $_log;
 
     /**
+     * Sets the default date format for Zend_Date
+     * 
+     * @var string
+     */
+    protected $_dateFormat = null;
+
+    /**
      * Constructor extensions.
      * Put the navigation acl code in the bootstrap file.
      */
@@ -102,5 +109,23 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     {
        $this->_log->info(__METHOD__);
        throw new ZendSF_Exception_404('Page not found');
+    }
+
+    /**
+     * returns an array of database objects in Json format to use with Dojo.
+     *
+     * @param array $dataObj
+     * @param string $id
+     * @return string
+     */
+    public function getDataStore($dataObj, $id)
+    {
+        foreach ($dataObj as $row) {
+            $items[] = $row->toArray($this->_dateFormat);
+        }
+
+        $store = new Zend_Dojo_Data($id, $items);
+
+        return $store->toJson();
     }
 }
