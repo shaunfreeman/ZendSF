@@ -51,7 +51,7 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
 
     /**
      * Sets the default date format for Zend_Date
-     * 
+     *
      * @var string
      */
     protected $_dateFormat = null;
@@ -120,6 +120,8 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
      */
     public function getDataStore($dataObj, $id)
     {
+        $items = array();
+        
         foreach ($dataObj as $row) {
             $items[] = $row->toArray($this->_dateFormat);
         }
