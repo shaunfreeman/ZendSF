@@ -61,6 +61,16 @@ abstract class ZendSF_Model_Mapper_Abstract
     protected $_namespace;
 
     /**
+     * @var ZendSF_Model_Mapper_Cache_Abstract
+     */
+    protected $_cache;
+
+    /**
+     * @var arrar cache options
+     */
+    protected $_cacheOptions;
+
+    /**
      * @var array Form instances
      */
     protected $_forms = array();
@@ -289,6 +299,73 @@ abstract class ZendSF_Model_Mapper_Abstract
 	    return $this->_forms[$name];
     }
 
+    /**
+     * Set the cache to use.
+     *
+     * @param ZendSF_Model_Mapper_Cache_Abstract $cache
+     */
+    public function setCache(ZendSF_Model_Mapper_Cache_Abstract $cache)
+    {
+        $this->_cache = $cache;
+    }
+
+    /**
+     * Set the options
+     *
+     * @param array $options
+     */
+    public function setCacheOptions(array $options)
+    {
+        $this->_cacheOptions = $options;
+    }
+
+    /**
+     * Get the cache options
+     *
+     * @return array
+     */
+    public function getCacheOptions()
+    {
+        if (empty($this->_cacheOptions)) {
+            $frontendOptions = array(
+                'lifeTime'                  => 1800,
+                'automatic_serialization'   => true
+            );
+
+            $backendOptions = array(
+                'cache_dir' => APPLICATION_PATH . '/../data/cache/db'
+            );
+
+            $this->_cacheOptions = array(
+                'frontend'          => 'Class',
+                'backend'           => 'File',
+                'frontendOptions'   => $frontendOptions,
+                'backendOptions'    => $backendOptions
+            );
+        }
+
+        return $this->_cacheOptions;
+    }
+
+    /**
+     * Query the cache
+     *
+     * @param type $tagged The tag to save data to
+     * @return ZendSF_Model_Mapper_Cache_Abstract
+     */
+    public function getCached($tagged = null)
+    {
+        if (null === $this->_cache) {
+            $this->_cache = new ZendSF_Model_Mapper_Cache(
+                $this,
+                $this->getCacheOptions()
+            );
+        }
+
+        $this->_cache->setTagged($tagged);
+
+        return $this->_cache;
+    }
     /**
      * Classes are named spaced using their module name
      * this returns that module name or the first class name segment.
