@@ -1,6 +1,6 @@
 <?php
 /**
- * MapperAbstract.php
+ * Abstract.php
  *
  * Copyright (c) 2010 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
