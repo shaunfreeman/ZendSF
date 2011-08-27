@@ -19,21 +19,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Uthando-CMS.  If not, see <http ://www.gnu.org/licenses/>.
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Widget
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
  * Description of ZendSF_Widget_Menu
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Widget
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Widget_Menu extends Uthando_Widget_Acl
+class ZendSF_Widget_Menu extends ZendSF_Widget_Acl
 {
     protected function init()
     {
@@ -50,4 +54,3 @@ class ZendSF_Widget_Menu extends Uthando_Widget_Acl
                 ->render();
     }
 }
-?>

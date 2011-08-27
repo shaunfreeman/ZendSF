@@ -49,7 +49,7 @@ class ZendSF_View_Helper_Widget extends ZendSF_View_Helper_Widget_Abstract
      */
     public function widget($name = null, $group = false)
     {
-        $this->_DbTable = new Core_Model_Mapper_Widget();
+        $this->_DbTable = new ZendSF_Model_Mapper_Widget();
 
         if (is_string($name) && $group === false) {
             return $this->getWidgetByName($name);

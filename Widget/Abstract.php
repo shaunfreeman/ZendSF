@@ -19,19 +19,23 @@
  * You should have received a copy of the GNU General Public License
  * along with ZendSF.  If not, see <http ://www.gnu.org/licenses/>.
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Widget
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
  * Description of ZendSF_Widget_Abstract
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Widget
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 abstract class ZendSF_Widget_Abstract
 {
@@ -54,14 +58,11 @@ abstract class ZendSF_Widget_Abstract
      *
      * @param object|array $widget
      * @return none
-     * @access public
      */
     public function __construct($widget)
     {
         $this->_view = new Zend_View();
-        $this->_view->setScriptPath(APPLICATION_PATH . '/widgets/views');
-
-        $log = Zend_Registry::get('log');
+        $this->_view->setScriptPath(APPLICATION_PATH . '/../library/ZendSF/Widget/views');
 
         if (is_array($widget)) {
             $widget = ZendSF_Utility_Array::arrayToObject($widget);
@@ -74,11 +75,10 @@ abstract class ZendSF_Widget_Abstract
     }
 
     /**
-     * This method is overridden by parent class for an extra construction method.
+     * This method is overridden by parent class for an extra construction method
      *
      * @param none
      * @return none
-     * @access protected
      */
     protected function init() {}
 
@@ -88,7 +88,6 @@ abstract class ZendSF_Widget_Abstract
      *
      * @param string $params ini string.
      * @return none
-     * @access public
      */
     public function setParams($params = null)
     {
@@ -101,11 +100,9 @@ abstract class ZendSF_Widget_Abstract
      *
      * @param none
      * @return string html
-     * @access public
      */
     public function render()
     {
         return $this->_view->render($this->_viewTemplate);
     }
 }
-?>

@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with ZendSF.  If not, see <http ://www.gnu.org/licenses/>.
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage View_Helper_Widget
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
@@ -30,8 +30,8 @@
 /**
  * Description of Uthando_View_Helper_Widget_Abstract
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage View_Helper_Widget
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License

@@ -19,19 +19,23 @@
  * You should have received a copy of the GNU General Public License
  * along with ZendSF.  If not, see <http ://www.gnu.org/licenses/>.
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Widget
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
  * Description of Acl
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Widget
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 abstract class ZendSF_Widget_Acl extends ZendSF_Widget_Abstract
 {
@@ -41,7 +45,12 @@ abstract class ZendSF_Widget_Acl extends ZendSF_Widget_Abstract
     protected function getAcl()
     {
         if (!$this->_acl instanceof ZendSF_Acl_Abstarct) {
-            //$this->_acl = new Uthando_Acl_Uthando();
+            // get the acl model of the current module.
+            $front = Zend_Controller_Front::getInstance();
+            $curModule = ucfirst($front->getRequest()->getModuleName());
+            $acl = $curModule . '_Model_Acl_' . $curModule;
+
+            $this->_acl = new $acl();
         }
 
         return $this->_acl;
@@ -65,4 +74,3 @@ abstract class ZendSF_Widget_Acl extends ZendSF_Widget_Abstract
         return ($this->_identity->hasIdentity()) ? $this->_identity->getIdentity()->role : 'guest';
     }
 }
-?>
