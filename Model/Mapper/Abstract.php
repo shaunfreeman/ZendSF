@@ -327,20 +327,15 @@ abstract class ZendSF_Model_Mapper_Abstract
     public function getCacheOptions()
     {
         if (empty($this->_cacheOptions)) {
-            $frontendOptions = array(
-                'lifeTime'                  => 1800,
-                'automatic_serialization'   => true
-            );
-
-            $backendOptions = array(
-                'cache_dir' => APPLICATION_PATH . '/../data/cache/db'
-            );
+           $cacheOptions = Zend_Registry::get('config')
+                ->cache
+                ->modelMapper;
 
             $this->_cacheOptions = array(
-                'frontend'          => 'Class',
-                'backend'           => 'File',
-                'frontendOptions'   => $frontendOptions,
-                'backendOptions'    => $backendOptions
+                'frontend'          => $cacheOptions->frontend->type,
+                'backend'           => $cacheOptions->backend->type,
+                'frontendOptions'   => $cacheOptions->frontendOptions->toArray(),
+                'backendOptions'    => $cacheOptions->backendOptions->toArray()
             );
         }
 
