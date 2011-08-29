@@ -39,6 +39,12 @@
  */
 class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 {
+    /**
+     * Gets a widget by its name
+     * 
+     * @param string $widget
+     * @return ZendSF_Model_Widget 
+     */
     public function getWidgetByName($widget)
     {
         $select = $this->getDbTable()
@@ -49,6 +55,13 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
         return $this->fetchRow($select);
     }
 
+    /**
+     * Gets a group of widgets by their group name
+     * 
+     * @param string $group
+     * @param bool $raw
+     * @return ZendSF_Model_Widget 
+     */
     public function getWidgetsByGroup($group, $raw = false)
     {
         $widgetGroupTable = new ZendSF_Model_Mapper_Widget_Group();
@@ -63,13 +76,16 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 
         foreach ($widgets as $row) {
 			if ($row->enabled) {
-            	$entries[] = new $this->_modelClass($row);
+            	$entries[] = new ZendSF_Model_Widget($row);
 			}
         }
 
         return $entries;
     }
 
+    /**
+     * Saves a widget to the database
+     */
     public function save()
     {
         if (!$this->checkAcl('save')) {
@@ -77,6 +93,11 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
         }
     }
 
+    /**
+     * Deletes an widget by its id
+     * 
+     * @param int $id 
+     */
     public function delete($id)
     {
         if (!$this->checkAcl('delete')) {
@@ -84,6 +105,14 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
         }
     }
 
+    /**
+     * Injector for the acl
+     *
+     * We add all the access rule for this resource here
+     *
+     * @param Zend_Acl $acl
+     * @return ZendSF_Model_Mapper_Widget 
+     */
     public function setAcl($acl) {
         parent::setAcl($acl);
 

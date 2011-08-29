@@ -39,6 +39,13 @@
  */
 class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
 {
+    /**
+     * Gets the widget group by its id
+     * 
+     * @param string $group
+     * @param bool $raw
+     * @return type 
+     */
     public function getWidgetGroupId($group, $raw = false)
     {
         $select = $this->getDbTable()
@@ -48,6 +55,9 @@ class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
         return $this->fetchRow($select, $raw);
     }
 
+    /**
+     * Saves a widget group to the database
+     */
     public function save()
     {
         if (!$this->checkAcl('save')) {
@@ -55,6 +65,11 @@ class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
         }
     }
 
+    /**
+     * Deletes a widget group by its id
+     * 
+     * @param int $id 
+     */
     public function delete($id)
     {
         if (!$this->checkAcl('delete')) {
@@ -62,6 +77,14 @@ class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
         }
     }
 
+    /**
+     * Injector for the acl
+     *
+     * We add all the access rule for this resource here
+     *
+     * @param Zend_Acl $acl
+     * @return ZendSF_Model_Mapper_Widget_Group 
+     */
     public function setAcl($acl) {
         parent::setAcl($acl);
 

@@ -101,7 +101,7 @@ abstract class ZendSF_Widget_Abstract
     public function setParams($params = null)
     {
         $params = ($params) ? $params : $this->_view->widget->params;
-        $this->_view->assign('params', (array) parse_ini_string($params));
+        $this->_view->assign('params', (array) $params);
     }
 
     /**

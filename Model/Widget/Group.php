@@ -39,30 +39,69 @@
  */
 class ZendSF_Model_Widget_Group extends ZendSF_Model_Abstract
 {
+    /**
+     * @var int
+     */
     protected $_widgetGroupId;
+    
+    /**
+     * @var string
+     */
     protected $_widgetGroup;
+    
+    /**
+     * @var string
+     */
+    protected $_primary = 'widgetGroupId';
 
+    /**
+     * Overrides parent method
+     * 
+     * @return int
+     */
     public function getId()
     {
         return $this->_widgetGroupId;
     }
 
+    /**
+     * Gets the widget group id
+     * 
+     * @return int 
+     */
     public function getWidgetGroupId()
     {
         return $_widgetGroupId;
     }
 
+    /**
+     * Sets the widget group id
+     * 
+     * @param int $id
+     * @return ZendSF_Model_Widget_Group 
+     */
     public function setWidgetGroupId($id)
     {
         $this->_widgetGroupId = (int) $id;
         return $this;
     }
 
+    /**
+     * Gets the widget group name
+     * 
+     * @return string 
+     */
     public function getWidgetGroup()
     {
         return $this->_widgetGroup;
     }
 
+    /**
+     * Sets the widget group name
+     * 
+     * @param string $group
+     * @return ZendSF_Model_Widget_Group 
+     */
     public function setWidgetGroup($group)
     {
         $this->_widgetGroup = (string) $group;
