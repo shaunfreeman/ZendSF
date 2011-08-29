@@ -1,6 +1,6 @@
 <?php
 /**
- * Noumenal PHP Library.
+ * From Noumenal PHP Library.
  *
  * PHP classes built on top of Zend Framework. (http://framework.zend.com/)
  *

@@ -41,8 +41,8 @@ class ZendSF_View_Helper_HtmlPurifier extends Zend_View_Helper_Abstract
 {
     /**
      * Returns the string $ value, purified by HTMLPurifier
-     * @ param string $ value
-     * @ param mixed $ config
+     * @ param string $value
+     * @ param mixed $config
      * @ return string
      */
     public function HtmlPurifier($value , $config = null)

@@ -1,6 +1,6 @@
 <?php
 /**
- * SfMenu.php
+ * CssHelper.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -28,7 +28,7 @@
  */
 
 /**
- * Description of ZendSF_View_Helper_HtmlPurifier
+ * Description of ZendSF_View_Helper_CssHelper
  *
  * @category   ZendSF
  * @package    ZendSF
