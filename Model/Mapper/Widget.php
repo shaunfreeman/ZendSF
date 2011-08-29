@@ -39,22 +39,6 @@
  */
 class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 {
-    protected $_dbTableClass = 'ZendSF_Model_DbTable_Widget';
-    protected $_modelClass = 'ZendSF_Model_Widget';
-
-    protected function _setVars($row, $module)
-    {
-        return $module
-            ->setWidgetId($row->widgetId)
-            ->setName($row->name)
-            ->setWidget($row->widget)
-            ->setSortOrder($row->sortOrder)
-            ->setShowTitle($row->showTitle)
-            ->setParams($row->params)
-            ->setHtml($row->html)
-            ->setEnabled($row->enabled);
-    }
-
     public function getWidgetByName($widget)
     {
         $select = $this->getDbTable()
@@ -71,15 +55,15 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
         $group = $widgetGroupTable->getWidgetGroupId($group, $raw);
 
         $widgets = $group->findDependentRowset(
-                'ZendSF_Model_DbTable_Widget',
-                'Group'
+            'ZendSF_Model_DbTable_Widget',
+            'Group'
         );
 
         $entries = array();
 
         foreach ($widgets as $row) {
 			if ($row->enabled) {
-            	$entries[] = $this->_setVars($row, new $this->_modelClass());
+            	$entries[] = new $this->_modelClass($row);
 			}
         }
 
@@ -88,12 +72,16 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 
     public function save()
     {
-
+        if (!$this->checkAcl('save')) {
+            throw new ZendSF_Acl_Exception('saving widgets is not allowed.');
+        }
     }
 
     public function delete($id)
     {
-        
+        if (!$this->checkAcl('delete')) {
+            throw new ZendSF_Acl_Exception('deleting widgets is not allowed.');
+        }
     }
 
     public function setAcl($acl) {

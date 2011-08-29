@@ -39,15 +39,6 @@
  */
 class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
 {
-    protected $_dbTableClass = 'ZendSF_Model_DbTable_Widget_Group';
-    protected $_modelClass = 'ZendSF_Model_Widget_Group';
-
-    protected function  _setVars($row, $class) {
-        return $class
-            ->setWidgetGroupId($row->widgetGroupId)
-            ->setWidgetGroup($row->widgetGroup);
-    }
-
     public function getWidgetGroupId($group, $raw = false)
     {
         $select = $this->getDbTable()
@@ -59,12 +50,16 @@ class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
 
     public function save()
     {
-
+        if (!$this->checkAcl('save')) {
+            throw new ZendSF_Acl_Exception('saving widget groups is not allowed.');
+        }
     }
 
     public function delete($id)
     {
-
+        if (!$this->checkAcl('delete')) {
+            throw new ZendSF_Acl_Exception('deleting widget groups is not allowed.');
+        }
     }
 
     public function setAcl($acl) {

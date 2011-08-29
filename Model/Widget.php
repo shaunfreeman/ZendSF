@@ -48,6 +48,12 @@ class ZendSF_Model_Widget extends ZendSF_Model_Abstract
     protected $_params;
     protected $_html;
     protected $_enabled;
+    protected $_primary = 'widgetId';
+
+    public function getId()
+    {
+        return $this->_widgetId;
+    }
 
     public function getWidgetId()
     {
@@ -98,9 +104,9 @@ class ZendSF_Model_Widget extends ZendSF_Model_Abstract
         return $this->_sortOrder;
     }
 
-    public function setSortOrder($sort_order)
+    public function setSortOrder($sortOrder)
     {
-        $this->_sortOrder = (int) $sort_order;
+        $this->_sortOrder = (int) $sortOrder;
         return $this;
     }
 
@@ -109,9 +115,9 @@ class ZendSF_Model_Widget extends ZendSF_Model_Abstract
         return $this->_showTitle;
     }
 
-    public function setShowTitle($show_title)
+    public function setShowTitle($showTitle)
     {
-        $this->_showTitle = (int) $show_title;
+        $this->_showTitle = (int) $showTitle;
         return $this;
     }
 

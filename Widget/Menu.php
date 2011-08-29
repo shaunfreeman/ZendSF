@@ -41,16 +41,12 @@ class ZendSF_Widget_Menu extends ZendSF_Widget_Acl
 {
     protected function init()
     {
-        //$template = Zend_Registry::get('template');
-
-        //$container = $template->getNavigation($this->_view->params['menu']);
-
         $this->_view->html = $this->_view
-                ->navigation($container)
-                ->menu()
-                ->setAcl($this->getAcl())
-                ->setRole($this->getRole())
-                ->setUlClass($this->_view->params['ul_class'])
-                ->render();
+            ->navigation()
+            ->sfMenu($this->_view->params['menu'])
+            ->setAcl($this->getAcl())
+            ->setRole($this->getRole())
+            ->setUlClass($this->_view->params['ul_class'])
+            ->render();
     }
 }

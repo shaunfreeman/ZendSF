@@ -62,7 +62,16 @@ abstract class ZendSF_Widget_Abstract
     public function __construct($widget)
     {
         $this->_view = new Zend_View();
-        $this->_view->setScriptPath(APPLICATION_PATH . '/../library/ZendSF/Widget/views');
+
+        $this->_view->addHelperPath(
+            realpath(APPLICATION_PATH . '/../library/ZendSF/View/Helper'),
+            'ZendSF_View_Helper'
+        );
+
+        $this->_view->setScriptPath(
+            realpath(APPLICATION_PATH
+            . '/../library/ZendSF/Widget/views')
+        );
 
         if (is_array($widget)) {
             $widget = ZendSF_Utility_Array::arrayToObject($widget);

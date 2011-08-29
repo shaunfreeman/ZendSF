@@ -42,6 +42,11 @@ class ZendSF_Model_Widget_Group extends ZendSF_Model_Abstract
     protected $_widgetGroupId;
     protected $_widgetGroup;
 
+    public function getId()
+    {
+        return $this->_widgetGroupId;
+    }
+
     public function getWidgetGroupId()
     {
         return $_widgetGroupId;

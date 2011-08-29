@@ -28,7 +28,6 @@
  */
 
 /**
- * Description of ZendSF_View_Helper_Widget
  * Constructs and outputs widgets
  *
  * @category   ZendSF
@@ -41,10 +40,11 @@
 class ZendSF_View_Helper_Widget extends ZendSF_View_Helper_Widget_Abstract
 {
     /**
-     * Constructer can take two arguments, name of widget and widget group name.
+     * Constructor can take two arguments, name of widget/widget group name and
+     * whether this is a group or nor defaults to false.
      *
-     * @param string $name Widget name
-     * @param bool $group Group name
+     * @param string $name Widget|Widget group name
+     * @param bool $group true|false
      * @return ZendSF_View_Helper_Widget
      */
     public function widget($name = null, $group = false)
@@ -71,7 +71,7 @@ class ZendSF_View_Helper_Widget extends ZendSF_View_Helper_Widget_Abstract
         $widget = $this->_DbTable->getWidgetByName($name);
 
         if ($widget instanceof ZendSF_Model_Abstract) {
-            $widgetClass = $this->_getInflected($widget->widget);
+            $widgetClass = $widget->widget;
             $this->_widget = new $widgetClass($widget);
         } else {
             $this->_widget = '';
