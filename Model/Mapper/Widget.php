@@ -40,32 +40,42 @@
 class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 {
     /**
+     * @var string the DbTable class name
+     */
+    protected $_dbTableClass = 'ZendSF_Model_DbTable_Widget';
+
+    /**
+     * @var sting the model class name
+     */
+    protected $_modelClass = 'ZendSF_Model_Widget';
+
+    /**
      * Gets a widget by its name
-     * 
+     *
      * @param string $widget
-     * @return ZendSF_Model_Widget 
+     * @return ZendSF_Model_Widget
      */
     public function getWidgetByName($widget)
     {
         $select = $this->getDbTable()
-                ->select()
-                ->where('name = ?', $widget)
-                ->where('enabled = 1');
+            ->select()
+            ->where('name = ?', $widget)
+            ->where('enabled = 1');
 
         return $this->fetchRow($select);
     }
 
     /**
      * Gets a group of widgets by their group name
-     * 
+     *
      * @param string $group
      * @param bool $raw
-     * @return ZendSF_Model_Widget 
+     * @return ZendSF_Model_Widget
      */
     public function getWidgetsByGroup($group, $raw = false)
     {
-        $widgetGroupTable = new ZendSF_Model_Mapper_Widget_Group();
-        $group = $widgetGroupTable->getWidgetGroupId($group, $raw);
+        $widgetGroupTable = new ZendSF_Model_Mapper_WidgetGroup();
+        $group = $widgetGroupTable->getWidgetGroup($group, $raw);
 
         $widgets = $group->findDependentRowset(
             'ZendSF_Model_DbTable_Widget',
@@ -95,14 +105,20 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 
     /**
      * Deletes an widget by its id
-     * 
-     * @param int $id 
+     *
+     * @param int $id
      */
     public function delete($id)
     {
         if (!$this->checkAcl('delete')) {
             throw new ZendSF_Acl_Exception('deleting widgets is not allowed.');
         }
+
+        $where = $this->getDbTable()
+            ->getAdapter()
+            ->quoteInto('widgetId = ?', $id);
+
+        return parent::delete($where);
     }
 
     /**
@@ -111,12 +127,13 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
      * We add all the access rule for this resource here
      *
      * @param Zend_Acl $acl
-     * @return ZendSF_Model_Mapper_Widget 
+     * @return ZendSF_Model_Mapper_Widget
      */
     public function setAcl($acl) {
         parent::setAcl($acl);
 
-        $this->_acl->allow('admin', $this);
+        $this->_acl
+            ->allow('admin', $this);
 
         return $this;
     }

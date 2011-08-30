@@ -156,8 +156,8 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     public function getAcl()
     {
         if (null === $this->_acl) {
-            $module = $this->_namespace[0];
-            $acl = ucfirst($module) . '_Model_Acl_' . ucfirst($module);
+            $module = ucfirst($this->_namespace);
+            $acl = $module . '_Model_Acl_' . $module;
 
             if (class_exists($acl)) {
                 $this->setAcl(new $acl);

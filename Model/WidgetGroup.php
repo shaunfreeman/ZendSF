@@ -1,6 +1,6 @@
 <?php
 /**
- * WidgetGroup.php
+ * Group.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -21,27 +21,90 @@
  *
  * @category ZendSF
  * @package ZendSF
- * @subpackage Model_DbTable
+ * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Description of ZendSF_Model_DbTable_Widget_Group
+ * Description of ZendSF_Model_WidgetGroup
  *
  * @category ZendSF
  * @package ZendSF
- * @subpackage Model_DbTable
+ * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Model_DbTable_Widget_Group extends Zend_Db_Table_Abstract
+class ZendSF_Model_WidgetGroup extends ZendSF_Model_Abstract
 {
-    protected $_name = 'widget_group';
+    /**
+     * @var int
+     */
+    protected $_widgetGroupId;
+
+    /**
+     * @var string
+     */
+    protected $_widgetGroup;
+
+    /**
+     * @var string
+     */
     protected $_primary = 'widgetGroupId';
 
-    protected $_dependentTables = array('ZendSF_Model_DbTable_Widget');
-}
+    /**
+     * Overrides parent method
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->_widgetGroupId;
+    }
 
+    /**
+     * Gets the widget group id
+     *
+     * @return int
+     */
+    public function getWidgetGroupId()
+    {
+        return $_widgetGroupId;
+    }
+
+    /**
+     * Sets the widget group id
+     *
+     * @param int $id
+     * @return ZendSF_Model_Widget_Group
+     */
+    public function setWidgetGroupId($id)
+    {
+        $this->_widgetGroupId = (int) $id;
+        return $this;
+    }
+
+    /**
+     * Gets the widget group name
+     *
+     * @return string
+     */
+    public function getWidgetGroup()
+    {
+        return $this->_widgetGroup;
+    }
+
+    /**
+     * Sets the widget group name
+     *
+     * @param string $group
+     * @return ZendSF_Model_Widget_Group
+     */
+    public function setWidgetGroup($group)
+    {
+        $this->_widgetGroup = (string) $group;
+        return $this;
+    }
+}

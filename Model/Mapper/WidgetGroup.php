@@ -37,20 +37,30 @@
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
+class ZendSF_Model_Mapper_WidgetGroup extends ZendSF_Model_Mapper_Acl_Abstract
 {
     /**
+     * @var string the DbTable class name
+     */
+    protected $_dbTableClass = 'ZendSF_Model_DbTable_WidgetGroup';
+
+    /**
+     * @var sting the model class name
+     */
+    protected $_modelClass = 'ZendSF_Model_WidgetGroup';
+
+    /**
      * Gets the widget group by its id
-     * 
+     *
      * @param string $group
      * @param bool $raw
-     * @return type 
+     * @return type
      */
-    public function getWidgetGroupId($group, $raw = false)
+    public function getWidgetGroup($group, $raw = false)
     {
         $select = $this->getDbTable()
-                ->select()
-                ->where('widgetGroup = ?', $group);
+            ->select()
+            ->where('widgetGroup = ?', $group);
 
         return $this->fetchRow($select, $raw);
     }
@@ -67,14 +77,20 @@ class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
 
     /**
      * Deletes a widget group by its id
-     * 
-     * @param int $id 
+     *
+     * @param int $id
      */
     public function delete($id)
     {
         if (!$this->checkAcl('delete')) {
             throw new ZendSF_Acl_Exception('deleting widget groups is not allowed.');
         }
+
+        $where = $this->getDbTable()
+            ->getAdapter()
+            ->quoteInto('widgetGroupId = ?', $id);
+
+        return parent::delete($where);
     }
 
     /**
@@ -83,12 +99,13 @@ class ZendSF_Model_Mapper_Widget_Group extends ZendSF_Model_Mapper_Acl_Abstract
      * We add all the access rule for this resource here
      *
      * @param Zend_Acl $acl
-     * @return ZendSF_Model_Mapper_Widget_Group 
+     * @return ZendSF_Model_Mapper_Widget_Group
      */
     public function setAcl($acl) {
         parent::setAcl($acl);
 
-        $this->_acl->allow('admin', $this);
+        $this->_acl
+            ->allow('admin', $this);
 
         return $this;
     }

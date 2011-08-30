@@ -48,7 +48,7 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
      * @var ZendSF_Model_Mapper_Widget
      */
     protected $_DbTable;
-    
+
     /**
      * Constructor can take two arguments, name of widget/widget group name and
      * whether this is a group or nor defaults to false.
@@ -102,13 +102,13 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
         $widgets = $this->_DbTable->getWidgetsByGroup($group, true);
 
         foreach ($widgets as $widget) {
-           $widgetClass = $this->_getInflected($widget->widget);
+           $widgetClass = $widget->widget;
            $this->_widget[] = new $widgetClass($widget);
         }
 
         return $this;
     }
-    
+
     /**
      * Magic method to output widget to a string.
      *
@@ -145,21 +145,5 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
         } else {
             return '';
         }
-    }
-
-    /**
-     * Inflect the name using the inflector filter.
-     * Changes camelCaseWord to Camel_Case_Word
-     *
-     * @param string $name The name to inflect
-     * @return string The inflected string
-     */
-    protected function _getInflected($name)
-    {
-        $inflector = new Zend_Filter_Inflector(':class');
-        $inflector->setRules(array(
-            ':class'  => array('Word_CamelCaseToUnderscore')
-        ));
-        return ucfirst($inflector->filter(array('class' => $name)));
     }
 }

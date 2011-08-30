@@ -44,4 +44,3 @@ class ZendSF_Widget_Html extends ZendSF_Widget_Acl
         $this->_view->html = $this->_view->widget->html;
     }
 }
-?>

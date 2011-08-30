@@ -1,6 +1,6 @@
 <?php
 /**
- * Widget.php
+ * WidgetGroup.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -22,28 +22,26 @@
  * @category ZendSF
  * @package ZendSF
  * @subpackage Model_DbTable
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Description of ZendSF_Model_DbTable_Widget
+ * Description of ZendSF_Model_DbTable_Widget_Group
  *
  * @category ZendSF
  * @package ZendSF
  * @subpackage Model_DbTable
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Model_DbTable_Widget extends Zend_Db_Table_Abstract
+class ZendSF_Model_DbTable_WidgetGroup extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'widget';
-    protected $_primary = 'widgetId';
+    protected $_name = 'widgetGroup';
+    protected $_primary = 'widgetGroupId';
 
-    protected $_referenceMap = array(
-        'Group' => array(
-            'columns'       => 'widgetGroupId',
-            'refTableClass' => 'ZendSF_Model_DbTable_WidgetGroup',
-            'refColumns'    => 'widgetGroupId'
-        )
-    );
+    protected $_dependentTables = array('ZendSF_Model_DbTable_Widget');
 }
-?>
+

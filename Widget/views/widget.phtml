@@ -1,8 +1,8 @@
-<div class="widget">
+<div id="<?= $this->params['widget_id']; ?>" class="<?= $this->params['widget_class']; ?>">
     <?php if ($this->widget->showTitle): ?>
-    <h3><span><?= $this->widget->name; ?></span></h3>
+    <h2><?= $this->widget->name; ?></h2>
     <?php endif; ?>
-    <div class="widget<?= $this->params['widgetclass_sfx']; ?>">
+    <div id="<?= $this->params['widget_id_inner']; ?>" class="<?= $this->params['widget_class_inner']; ?>">
         <?= $this->html; ?>
     </div>
 </div>

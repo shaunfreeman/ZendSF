@@ -75,25 +75,6 @@ abstract class ZendSF_Model_Mapper_Abstract
      */
     protected $_forms = array();
 
-    public function __construct()
-    {
-        $this->_namespace = $this->_getNamespace();
-
-        $this->_dbTableClass = join('_', array(
-            $this->_namespace[0],
-            'Model_DbTable',
-            end($this->_namespace)
-        ));
-
-        $this->_modelClass = join('_', array(
-            $this->_namespace[0],
-            'Model',
-            end($this->_namespace)
-        ));
-
-        $this->setDbTable($this->_dbTableClass);
-    }
-
     /**
      * Sets the database table object.
      *
@@ -201,6 +182,10 @@ abstract class ZendSF_Model_Mapper_Abstract
 
         $data = $model->toArray();
 
+        // We don't want the primary key in our query.
+        unset($data[$primary]);
+
+        // Just get the values we need to update the database.
         foreach ($data as $key => $value) {
             if (!in_array($key, $cols)) {
                 unset($data[$key]);
@@ -210,7 +195,6 @@ abstract class ZendSF_Model_Mapper_Abstract
         }
 
         if (null === ($id = $model->getId())) {
-            unset($data[$primary]);
             return $this->getDbTable()->insert($data);
         } else {
             return $this->getDbTable()->update($data, array(
@@ -244,9 +228,11 @@ abstract class ZendSF_Model_Mapper_Abstract
 
         $primary = current($this->getDbTable()->info('primary'));
         $fromParts = $select->getPart('from');
-        $mainTable = strtolower(end($this->_namespace));
 
-        unset($fromParts[$mainTable]);
+        // this needs chanings. find another way to get main table.
+        //$mainTable = strtolower(end($this->_namespace));
+
+        //unset($fromParts[$mainTable]);
 
         $count = clone $select;
         $count->reset(Zend_Db_Select::COLUMNS);
@@ -275,7 +261,7 @@ abstract class ZendSF_Model_Mapper_Abstract
         $paginator = new Zend_Paginator($adapter);
 
         $paginator->setItemCountPerPage((int) $numDisplay)
-                ->setCurrentPageNumber((int) $paged);
+            ->setCurrentPageNumber((int) $paged);
 
         return $paginator;
     }
@@ -290,7 +276,7 @@ abstract class ZendSF_Model_Mapper_Abstract
     {
         if (!isset($this->_forms[$name])) {
             $class = join('_', array(
-                    $this->_namespace[0],
+                    $this->_namespace,
                     'Form',
                     $this->_getInflected($name)
             ));
@@ -370,7 +356,7 @@ abstract class ZendSF_Model_Mapper_Abstract
     private function _getNamespace()
     {
         $ns = explode('_', get_class($this));
-        return $ns;
+        return $ns[0];
     }
 
     /**
