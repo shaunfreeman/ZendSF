@@ -353,7 +353,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      *
      * @return string This class namespace
      */
-    private function _getNamespace()
+    protected function _getNamespace()
     {
         $ns = explode('_', get_class($this));
         return $ns[0];
