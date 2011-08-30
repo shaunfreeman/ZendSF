@@ -276,7 +276,7 @@ abstract class ZendSF_Model_Mapper_Abstract
     {
         if (!isset($this->_forms[$name])) {
             $class = join('_', array(
-                    $this->_namespace,
+                    $this->_getNamespace(),
                     'Form',
                     $this->_getInflected($name)
             ));
