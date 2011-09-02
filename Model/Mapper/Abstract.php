@@ -115,7 +115,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      * @param int $id
      * @return ZendSF_Model_Abstract
      */
-    public function find($id)
+    public function find($id, $raw = false)
     {
         $result = $this->getDbTable()->find($id);
 
@@ -124,7 +124,7 @@ abstract class ZendSF_Model_Mapper_Abstract
         }
 
         $row = $result->current();
-        return new $this->_modelClass($row);
+        return ($raw) ? $row : new $this->_modelClass($row);
     }
 
     /**
