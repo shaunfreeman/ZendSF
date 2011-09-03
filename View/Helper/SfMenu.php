@@ -68,7 +68,7 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
      * @return ZendSF_View_Helper_SfMenu
      */
     public function sfMenu($container = null)
-    {   
+    {
         if (is_string($container) &&
                 Zend_Registry::isRegistered('siteMenu' . ucfirst($container))) {
             /* @var $container Zend_Navigation */
@@ -235,7 +235,7 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
                     $ulClass = ' class="' . $ulClass . '"';
                 } else {
                     if ($ulSubClass && $ulSubId) {
-                        $ulClass = ' id="' . $ulSubId . '" class="' . $ulSubClass . '"';
+                        $ulClass = ' id="' . $ulSubId . '" class="' . $ulSubClass . '" style="display: none;"';
                     } else {
                         $ulClass = '';
                     }
