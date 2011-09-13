@@ -90,7 +90,7 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
      * @param string $method
      * @return ZendSF_Controller_Action_Abstract
      */
-    public function setForm($formName, $action, $route = 'default', $method = 'post')
+    public function setForm($formName, $action, $reset = false, $route = 'default', $method = 'post')
     {
         $urlHelper = $this->_helper->getHelper('url');
 
@@ -98,7 +98,7 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
 
         $this->view->$formViewName = $this->_model->getForm($formName);
 
-        $this->view->$formViewName->setAction($urlHelper->url($action, $route));
+        $this->view->$formViewName->setAction($urlHelper->url($action, $route, $reset));
 
         $this->view->$formViewName->setMethod($method);
 
@@ -121,7 +121,7 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     public function getDataStore($dataObj, $id)
     {
         $items = array();
-        
+
         foreach ($dataObj as $row) {
             $items[] = $row->toArray($this->_dateFormat);
         }
