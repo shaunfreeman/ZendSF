@@ -123,16 +123,15 @@ abstract class ZendSF_Model_Mapper_Abstract
             return;
         }
 
-        $row = $result->current();
+        $resultSet = $result->current();
 
         if (!$raw) {
-            return $row;
-        } else {
-            $cols = $this->getDbTable()->info('cols');
-            $model = new $this->_modelClass($row);
-            $model->setCols($cols);
-            return $model;
+            $model = new $this->_modelClass($resultSet);
+            $model->setCols($this->getDbTable()->info('cols'));
+            $resultSet = $model;
         }
+
+        return $resultSet;
     }
 
     /**
@@ -171,20 +170,19 @@ abstract class ZendSF_Model_Mapper_Abstract
      */
     public function fetchRow($select, $raw = false)
     {
-        $row = $this->getDbTable()->fetchRow($select);
+        $resultSet = $this->getDbTable()->fetchRow($select);
 
-        if (0 == count($row)) {
+        if (0 == count($resultSet)) {
             return;
         }
 
         if (!$raw) {
-            return $row;
-        } else {
-            $cols = $this->getDbTable()->info('cols');
-            $model = new $this->_modelClass($row);
-            $model->setCols($cols);
-            return $model;
+            $model = new $this->_modelClass($resultSet);
+            $model->setCols($this->getDbTable()->info('cols'));
+            $resultSet = $model;
         }
+
+        return $resultSet;
     }
 
     /**
