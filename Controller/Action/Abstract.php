@@ -116,7 +116,7 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
      *
      * @param array $dataObj
      * @param string $id
-     * @return string
+     * @return Zend_Dojo_Data
      */
     public function getDataStore($dataObj, $id)
     {
@@ -126,8 +126,6 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
             $items[] = $row->toArray($this->_dateFormat);
         }
 
-        $store = new Zend_Dojo_Data($id, $items);
-
-        return $store->toJson();
+        return new Zend_Dojo_Data($id, $items);;
     }
 }
