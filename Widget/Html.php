@@ -39,8 +39,5 @@
  */
 class ZendSF_Widget_Html extends ZendSF_Widget_Acl
 {
-    protected function init()
-    {
-        $this->_view->html = $this->_view->widget->html;
-    }
+    
 }

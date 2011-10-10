@@ -79,7 +79,10 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
 
         $widgets = $group->findDependentRowset(
             'ZendSF_Model_DbTable_Widget',
-            'Group'
+            'Group',
+            $this->getDbTable()
+                ->select()
+                ->order('sortOrder ASC')
         );
 
         $entries = array();

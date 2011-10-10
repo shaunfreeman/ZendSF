@@ -73,8 +73,17 @@ abstract class ZendSF_Widget_Abstract
             . '/../library/ZendSF/Widget/views')
         );
 
+        $this->_view->addScriptPath(
+            realpath(APPLICATION_PATH
+            . '/../public/templates/widgets')
+        );
+
         if (is_array($widget)) {
             $widget = ZendSF_Utility_Array::arrayToObject($widget);
+        }
+
+        if (isset($widget->params['view_template'])) {
+            $this->_viewTemplate = $widget->params['view_template'];
         }
 
         $this->_view->assign('widget', (object) $widget);

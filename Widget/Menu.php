@@ -41,7 +41,7 @@ class ZendSF_Widget_Menu extends ZendSF_Widget_Acl
 {
     protected function init()
     {
-        $this->_view->html = $this->_view
+        $this->_view->widget->html = $this->_view
             ->navigation()
             ->sfMenu($this->_view->params['menu'])
             ->setAcl($this->getAcl())
