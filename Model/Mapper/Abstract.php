@@ -123,8 +123,15 @@ abstract class ZendSF_Model_Mapper_Abstract
             return;
         }
 
-        $row = $result->current();
-        return ($raw) ? $row : new $this->_modelClass($row);
+        $resultSet = $result->current();
+
+        if (!$raw) {
+            $model = new $this->_modelClass($resultSet);
+            $model->setCols($this->getDbTable()->info('cols'));
+            $resultSet = $model;
+        }
+
+        return $resultSet;
     }
 
     /**
@@ -136,12 +143,15 @@ abstract class ZendSF_Model_Mapper_Abstract
     public function fetchAll($select = null, $raw = false)
     {
         $resultSet = $this->getDbTable()->fetchAll($select);
+        $cols = $this->getDbTable()->info('cols');
 
         if (!$raw) {
             $rows = array();
 
             foreach ($resultSet as $row) {
-                $rows[] = new $this->_modelClass($row);
+                $model = new $this->_modelClass($row);
+                $model->setCols($cols);
+                $rows[] = $model;
             }
 
             $resultSet = $rows;
@@ -160,13 +170,19 @@ abstract class ZendSF_Model_Mapper_Abstract
      */
     public function fetchRow($select, $raw = false)
     {
-        $row = $this->getDbTable()->fetchRow($select);
+        $resultSet = $this->getDbTable()->fetchRow($select);
 
-        if (0 == count($row)) {
+        if (0 == count($resultSet)) {
             return;
         }
 
-        return ($raw) ? $row : new $this->_modelClass($row);
+        if (!$raw) {
+            $model = new $this->_modelClass($resultSet);
+            $model->setCols($this->getDbTable()->info('cols'));
+            $resultSet = $model;
+        }
+
+        return $resultSet;
     }
 
     /**
@@ -230,9 +246,9 @@ abstract class ZendSF_Model_Mapper_Abstract
         $fromParts = $select->getPart('from');
 
         // this needs chanings. find another way to get main table.
-        //$mainTable = strtolower(end($this->_namespace));
+        $mainTable = strtolower(end(explode('_', $this->_dbTableClass)));
 
-        //unset($fromParts[$mainTable]);
+        unset($fromParts[$mainTable]);
 
         $count = clone $select;
         $count->reset(Zend_Db_Select::COLUMNS);

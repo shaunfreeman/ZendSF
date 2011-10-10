@@ -72,6 +72,13 @@ abstract class ZendSF_Model_Abstract
     protected $_primary;
 
     /**
+     * Colums native this this DB Table.
+     *
+     * @var array
+     */
+    protected $_cols = array();
+
+    /**
      * Constructor
      *
      * @param array|Zend_Db_Table_Abstract|null $options
@@ -97,11 +104,12 @@ abstract class ZendSF_Model_Abstract
     {
        if (method_exists($this, 'set' . ucfirst($key))) {
             $method = 'set' . ucfirst($key);
-            return $this->$method($value);
+            $this->$method($value);
         } else {
             $this->_data->$key = $value;
-            return $this->_data->$key;
         }
+
+        return $this;
     }
 
     /**
@@ -131,6 +139,16 @@ abstract class ZendSF_Model_Abstract
     }
 
     /**
+     * Gets the model prefix.
+     *
+     * @return string $_prefix
+     */
+    public function getPrefix()
+    {
+        return $this->_prefix;
+    }
+
+    /**
      * Sets the options for this class.
      *
      * @param array $options
@@ -143,9 +161,16 @@ abstract class ZendSF_Model_Abstract
             if (is_string($this->_prefix)) {
                 $key = str_replace($this->_prefix, '', $key);
             }
+            
             $this->$key = $value;
         }
 
+        return $this;
+    }
+
+    public function setCols($cols)
+    {
+        $this->_cols = (array) $cols;
         return $this;
     }
 
@@ -176,7 +201,8 @@ abstract class ZendSF_Model_Abstract
             }
 
             // put the table prefix back.
-            if (is_string($this->_prefix)) {
+            if (is_string($this->_prefix) &&
+                    in_array($this->_prefix . lcfirst($key), $this->_cols)) {
                 $key = $this->_prefix . lcfirst($key);
             }
 
