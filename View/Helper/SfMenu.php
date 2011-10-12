@@ -62,6 +62,8 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
      */
     protected $_subIndicator = '';
 
+    protected $_identity;
+
     /**
      *
      * @param sring $container
@@ -78,6 +80,10 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
         if ($container instanceof Zend_Navigation_Container) {
             $this->setContainer($container);
         }
+
+        $this->setAcl($this->getAcl());
+        $this->setRole($this->getRole());
+
         return $this;
     }
 
@@ -285,5 +291,37 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
         }
 
         return $html;
+    }
+
+    public function getAcl()
+    {
+        if (!$this->_acl instanceof ZendSF_Acl_Abstarct) {
+            // get the acl model of the current module.
+            $front = Zend_Controller_Front::getInstance();
+            $curModule = ucfirst($front->getRequest()->getModuleName());
+            $acl = $curModule . '_Model_Acl_' . $curModule;
+
+            $this->_acl = new $acl();
+        }
+
+        return $this->_acl;
+    }
+
+    public function getIdentity()
+    {
+        if (!$this->_identity instanceof Zend_Auth) {
+            $this->_identity = Zend_Auth::getInstance();
+        }
+
+        return $this->_identity;
+    }
+
+    public function getRole()
+    {
+        if (!$this->_identity instanceof Zend_Auth) {
+            $this->getIdentity();
+        }
+
+        return ($this->_identity->hasIdentity()) ? $this->_identity->getIdentity()->role : 'guest';
     }
 }
