@@ -47,8 +47,31 @@ class ZendSF_Controller_Plugin_AdminContext extends Zend_Controller_Plugin_Abstr
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         if ($request->getParam('isAdmin')) {
+
             $layout = Zend_Layout::getMvcInstance();
             $layout->setLayout('admin/layout');
+
+            if (file_exists(APPLICATION_PATH . '/configs/adminMenu.xml')) {
+                $menu = new Zend_Config_Xml(
+                    APPLICATION_PATH . '/configs/adminMenu.xml',
+                    'nav'
+                );
+
+                $module = $request->getModuleName();
+                $aclModel = ucfirst($module) . '_Model_Acl_' . ucfirst($module);
+
+                $auth = Zend_Auth::getInstance();
+                $acl = new $aclModel();
+                $role = ($auth->hasIdentity()) ? $auth->getIdentity()->role : 'guest';
+
+                $view = Zend_Controller_Front::getInstance()
+                        ->getParam('bootstrap')
+                        ->getResource('view');
+
+                $view->navigation(new Zend_Navigation($menu))
+                    ->setAcl($acl)
+                    ->setRole($role);
+            }
         }
     }
 }
