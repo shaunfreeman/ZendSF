@@ -198,8 +198,12 @@ class ZendSF_View_Helper_DojoMenuBar extends Zend_View_Helper_Navigation_Menu
             }
 
             // render div tag and page
-            if ($page->count()) {
-                $dojoType = 'dijit.PopupMenuBarItem';
+            if ($page->hasChildren()) {
+                if ($depth == 0) {
+                    $dojoType = 'dijit.PopupMenuBarItem';
+                } else {
+                    $dojoType = 'dijit.PopupMenuItem';
+                }
             } elseif ($depth > 0) {
                 $dojoType = 'dijit.MenuItem';
             } else {

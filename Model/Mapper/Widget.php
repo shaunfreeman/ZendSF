@@ -77,20 +77,23 @@ class ZendSF_Model_Mapper_Widget extends ZendSF_Model_Mapper_Acl_Abstract
         $widgetGroupTable = new ZendSF_Model_Mapper_WidgetGroup();
         $group = $widgetGroupTable->getWidgetGroup($group, $raw);
 
-        $widgets = $group->findDependentRowset(
-            'ZendSF_Model_DbTable_Widget',
-            'Group',
-            $this->getDbTable()
-                ->select()
-                ->order('sortOrder ASC')
-        );
-
         $entries = array();
 
-        foreach ($widgets as $row) {
-			if ($row->enabled) {
-            	$entries[] = new ZendSF_Model_Widget($row);
-			}
+        if ($group) {
+
+            $widgets = $group->findDependentRowset(
+                'ZendSF_Model_DbTable_Widget',
+                'Group',
+                $this->getDbTable()
+                    ->select()
+                    ->order('sortOrder ASC')
+            );
+
+            foreach ($widgets as $row) {
+                if ($row->enabled) {
+                    $entries[] = new ZendSF_Model_Widget($row);
+                }
+            }
         }
 
         return $entries;

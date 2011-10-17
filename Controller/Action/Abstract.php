@@ -68,6 +68,11 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
 
         $this->view->request = $this->_request->getParams();
 
+        // turn off layout if ajax request
+        if ($this->_request->isXmlHttpRequest()) {
+            $this->view->layout()->disableLayout();
+        }
+
     }
 
     public function getForm($formName)
