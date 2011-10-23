@@ -135,7 +135,7 @@ abstract class ZendSF_Model_Abstract
      */
     public function getId()
     {
-        return $this->_data->{$this->_primary};
+        return (isset($this->_data->{$this->_primary})) ? $this->_data->{$this->_primary} : null;
     }
 
     /**
@@ -161,7 +161,7 @@ abstract class ZendSF_Model_Abstract
             if (is_string($this->_prefix)) {
                 $key = str_replace($this->_prefix, '', $key);
             }
-            
+
             $this->$key = $value;
         }
 
