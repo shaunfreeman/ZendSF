@@ -191,7 +191,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      * @param ZendSF_Model_Abstract $model
      * @return mixed
      */
-    public function save(ZendSF_Model_Abstract $model)
+    public function save($model)
     {
         $primary = current($this->getDbTable()->info('primary'));
         $cols = $this->getDbTable()->info('cols');

@@ -95,7 +95,7 @@ class ZendSF_Service_Authentication
         $method = 'getUserBy' . ucwords($this->_options->method);
 
         $user = $this->_userModel
-                ->$method($credentials[$this->_options->identity]);
+            ->$method($credentials[$this->_options->identity]);
 
         $auth->getStorage()->write($user);
 
