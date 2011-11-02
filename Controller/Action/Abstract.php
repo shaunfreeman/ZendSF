@@ -131,6 +131,6 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
             $items[] = $row->toArray($this->_dateFormat);
         }
 
-        return new Zend_Dojo_Data($id, $items);;
+        return new Zend_Dojo_Data($id, $items);
     }
 }
