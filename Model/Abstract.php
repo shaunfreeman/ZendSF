@@ -103,7 +103,7 @@ abstract class ZendSF_Model_Abstract
     public function __set($key, $value)
     {
        if (!is_object($this->_data)) $this->_data = new stdClass();
-       
+
        if (method_exists($this, 'set' . ucfirst($key))) {
             $method = 'set' . ucfirst($key);
             $this->$method($value);
@@ -126,7 +126,7 @@ abstract class ZendSF_Model_Abstract
             $method = 'get' . ucfirst($key);
             return $this->$method();
         } else {
-            return $this->_data->$key;
+            return (isset($this->_data->$key)) ? $this->_data->$key : null;
         }
     }
 
