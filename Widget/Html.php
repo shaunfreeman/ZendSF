@@ -39,5 +39,5 @@
  */
 class ZendSF_Widget_Html extends ZendSF_Widget_Acl
 {
-    
+    protected $_viewTemplate = 'widget.phtml';
 }

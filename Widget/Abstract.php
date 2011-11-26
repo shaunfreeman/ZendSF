@@ -51,7 +51,7 @@ abstract class ZendSF_Widget_Abstract
      *
      * @var $_viewTemplate
      */
-    protected $_viewTemplate = 'widget.phtml';
+    protected $_viewTemplate;
 
     /**
      * Contructor for widget class.

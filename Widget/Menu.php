@@ -39,6 +39,8 @@
  */
 class ZendSF_Widget_Menu extends ZendSF_Widget_Acl
 {
+    protected $_viewTemplate = 'widget.phtml';
+    
     protected function init()
     {
         $this->_view->widget->html = $this->_view

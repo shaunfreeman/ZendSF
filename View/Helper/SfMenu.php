@@ -240,7 +240,7 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
                 if ($ulClass && $depth ==  0) {
                     $ulClass = ' class="' . $ulClass . '"';
                 } else {
-                    if ($ulSubClass && $ulSubId) {
+                    if (isset($ulSubClass) && $ulSubId) {
                         $ulClass = ' id="' . $ulSubId . '" class="' . $ulSubClass . '" style="display: none;"';
                     } else {
                         $ulClass = '';
