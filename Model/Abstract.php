@@ -131,9 +131,20 @@ abstract class ZendSF_Model_Abstract
     }
 
     /**
+     * General getter method to get column value from database table.
+     *
+     * @param string $col
+     * @return mixed
+     */
+    public function get($col)
+    {
+        return $this->$col;
+    }
+
+    /**
      * Gets the model id
      *
-     * @return type
+     * @return string|null
      */
     public function getId()
     {

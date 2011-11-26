@@ -113,7 +113,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      * Finds a single record by it's id.
      *
      * @param int $id
-     * @return ZendSF_Model_Abstract
+     * @return ZendSF_Model_Abstract|Zend_Db_Table_Row_Abstract|null
      */
     public function find($id, $raw = false)
     {
@@ -138,7 +138,7 @@ abstract class ZendSF_Model_Mapper_Abstract
      * Fetches all entries in table or from a select object.
      *
      * @param object $select dbTable select object
-     * @return array ZendSF_Model_Abstract
+     * @return array ZendSF_Model_Abstract|Zend_Db_Table_Row_Abstract|null
      */
     public function fetchAll($select = null, $raw = false)
     {

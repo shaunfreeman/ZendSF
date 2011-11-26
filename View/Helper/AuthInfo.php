@@ -1,6 +1,6 @@
 <?php
 /**
- * SfMenu.php
+ * AuthInfo.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
