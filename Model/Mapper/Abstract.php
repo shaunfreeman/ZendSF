@@ -209,7 +209,7 @@ abstract class ZendSF_Model_Mapper_Abstract
                 unset($data[$key]);
             }
         }
-
+        
         if (null === ($id = $model->getId())) {
             return $this->getDbTable()->insert($data);
         } else {

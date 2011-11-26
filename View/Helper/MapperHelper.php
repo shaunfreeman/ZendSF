@@ -109,7 +109,7 @@ abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
     }
 
     /**
-     * Gets parent row.
+     * Gets parent row by rule definition.
      *
      * @param string $rule
      * @return ZendSF_View_Helepr_MapperHelper

@@ -46,4 +46,3 @@ class ZendSF_Model_DbTable_Widget extends Zend_Db_Table_Abstract
         )
     );
 }
-?>
