@@ -37,6 +37,7 @@ class ZendSF_Model_DbTable_Widget extends Zend_Db_Table_Abstract
 {
     protected $_name = 'widget';
     protected $_primary = 'widgetId';
+    protected $_rowClass = 'ZendSF_Model_DbTable_Row_Widget';
 
     protected $_referenceMap = array(
         'Group' => array(

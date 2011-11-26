@@ -108,7 +108,20 @@ abstract class ZendSF_Model_Mapper_Abstract
 
         return $this->_dbTable;
     }
-
+    /*
+    public function getDbTable($name)
+	{
+        if (!isset($this->_resources[$name])) {
+            $class = join('_', array(
+                    $this->_getNamespace(),
+                    'DbTable',
+                    $this->_getInflected($name)
+            ));
+            $this->_resources[$name] = new $class();
+        }
+	    return $this->_resources[$name];
+	}
+    */
     /**
      * Finds a single record by it's id.
      *
@@ -209,7 +222,7 @@ abstract class ZendSF_Model_Mapper_Abstract
                 unset($data[$key]);
             }
         }
-        
+
         if (null === ($id = $model->getId())) {
             return $this->getDbTable()->insert($data);
         } else {

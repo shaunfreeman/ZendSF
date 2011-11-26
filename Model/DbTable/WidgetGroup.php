@@ -41,6 +41,7 @@ class ZendSF_Model_DbTable_WidgetGroup extends Zend_Db_Table_Abstract
 {
     protected $_name = 'widgetGroup';
     protected $_primary = 'widgetGroupId';
+    protected $_rowClass = 'ZendSF_Model_DbTable_Row_WidgetGroup';
 
     protected $_dependentTables = array('ZendSF_Model_DbTable_Widget');
 }
