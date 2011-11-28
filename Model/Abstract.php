@@ -157,7 +157,7 @@ abstract class ZendSF_Model_Abstract
      * @param string $id
      * @return Zend_Dojo_Data
      */
-    public function getDojoDataStore(Zend_Db_Table_Rowset $dataObj, $id)
+    protected function _getDojoData(Zend_Db_Table_Rowset $dataObj, $id)
     {
         $items = array();
 
@@ -166,6 +166,41 @@ abstract class ZendSF_Model_Abstract
         }
 
         return new Zend_Dojo_Data($id, $items);
+    }
+
+    /**
+     * Gets and formats Dojo Data ready for Dojo DataGrid.
+     *
+     * @param array $post
+     * @param string $form
+     * @param string $dbTable
+     * @param string $method
+     * @param string $identifier
+     * @return string
+     */
+    protected function _getDojoDataStore(array $post, $form, $dbTable, $method, $identifier)
+    {
+        $sort = $post['sort'];
+        $count = $post['count'];
+        $start = $post['start'];
+
+        $form = $this->getForm($form);
+        $search = array();
+
+        if ($form->isValid($post)) {
+            $search = $form->getValues();
+        }
+
+        $dataObj = $this->getDbTable($dbTable)->$method($search, $sort, $count, $start);
+
+        $store = $this->_getDojoData($dataObj, $identifier);
+
+        $store->setMetadata(
+            'numRows',
+            $this->getDbTable($dbTable)->numRows($search)
+        );
+
+        return $store->toJson();
     }
 
     /**

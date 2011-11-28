@@ -77,4 +77,44 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
         $row = $this->find($id)->current();
         return $row->delete();
     }
+
+    /**
+     * Adds limit and offset to query.
+     *
+     * @param Zend_Db_Table_Select
+     * @param int $count
+     * @param int $offset
+     * @return Zend_Db_Table_Select
+     */
+    public function getLimit(Zend_Db_Table_Select $select, $count, $offset)
+    {
+        if ($count === null) {
+            return $select;
+        }
+
+        return $select->limit($count, $offset);
+    }
+
+    /**
+     * Adds an order by to query.
+     *
+     * @param Zend_Db_Table_Select
+     * @param string $sort
+     * @return Zend_Db_Table_Select
+     */
+    public function getSortOrder(Zend_Db_Table_Select $select, $sort)
+    {
+        if ($sort === '') {
+            return $select;
+        }
+
+        if(strchr($sort,'-')) {
+            $sort = substr($sort, 1, strlen($sort));
+            $order = 'DESC';
+        } else {
+            $order = 'ASC';
+        }
+
+        return $select->order($sort . ' ' . $order);
+    }
 }
