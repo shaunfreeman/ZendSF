@@ -21,23 +21,23 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Model_Mapper
+ * @subpackage Model_Acl
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Abstract model mapper acl class.
+ * Abstract model acl class.
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Model_Mapper
+ * @subpackage Model_Acl
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abstract
+abstract class ZendSF_Model_Acl_Abstract extends ZendSF_Model_Abstract
     implements Zend_Acl_Resource_Interface
 {
     /**
@@ -58,14 +58,14 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
      */
     public function  getResourceId()
     {
-        return $this->_modelClass;
+        return get_class($this);
     }
 
     /**
      * Set the identity of the current request
      *
      * @param array|string|null|Zend_Acl_Role_Interface $identity
-     * @return ZendSF_Model_Mapper_Abstract
+     * @return ZendSF_Model_Abstract
      * @todo move this method to ZendSF_Acl_Absract
      */
     public function setIdentity($identity)
@@ -92,7 +92,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
     }
 
     /**
-     * Get the identity, if no ident use 'Guest'
+     * Get the identity, if no ident use 'guest'
      *
      * @return string
      */
@@ -134,7 +134,7 @@ abstract class ZendSF_Model_Mapper_Acl_Abstract extends ZendSF_Model_Mapper_Abst
      * add $this as the resource, rules are defined by the parent class.
      *
      * @param Zend_Acl $acl
-     * @return ZendSF_Model_Mapper_Abstract
+     * @return ZendSF_Model_Abstract
      */
     public function setAcl(Zend_Acl $acl)
     {

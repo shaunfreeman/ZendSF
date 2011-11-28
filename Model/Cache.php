@@ -21,7 +21,7 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Model_Mapper
+ * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
@@ -32,12 +32,12 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Model_Mapper
+ * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Model_Mapper_Cache extends ZendSF_Model_Mapper_Cache_Abstract
+class ZendSF_Model_Cache extends ZendSF_Model_Cache_Abstract
 {
-    
+
 }

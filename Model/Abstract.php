@@ -2,7 +2,7 @@
 /**
  * Abstract.php
  *
- * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
+ * Copyright (c) 2010 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
  * This file is part of ZendSF.
  *
@@ -24,204 +24,238 @@
  * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
- * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>k
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Base model class that all our models will inherit from.
+ * Provides some common db functionality that is shared
+ * across our db-based resources.
  *
  * @category   ZendSF
  * @package    ZendSF
  * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license    http://www.gnu.org/licenses GNU General Public Licenset
+ * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 abstract class ZendSF_Model_Abstract
 {
     /**
-     * This object holds all model data, includes joins that
-     * do not normally live in this data model.
-     *
-     * @var object
+     * @var array Class methods
      */
-    protected $_data;
+    protected $_classMethods;
 
     /**
-     * Sets the default date format to save to the database.
-     * if set to null then date format will be saved as a unix timestamp.<br />
-     * example for MySql date field<br />
-     * yyyy-MM-dd
-     *
-     * @var string|null
+     * @var Zend_Db_Table_Abstract
      */
-    protected $_dateFormat = null;
+    protected $_dbTables = array();
 
     /**
-     * Database table prefix.
-     *
-     * @var string
+     * @var ZendSF_Model_Cache_Abstract
      */
-    protected $_prefix;
+    protected $_cache;
 
     /**
-     * Primary key for this model.
-     *
-     * @var string
+     * @var arrar cache options
      */
-    protected $_primary;
+    protected $_cacheOptions;
 
     /**
-     * Colums native this this DB Table.
-     *
-     * @var array
+     * @var array Form instances
      */
-    protected $_cols = array();
+    protected $_forms = array();
 
     /**
      * Constructor
      *
-     * @param array|Zend_Db_Table_Abstract|null $options
+     * @param array|Zend_Config|null $options
+     * @return void
      */
     public function __construct($options = null)
     {
-        if ($options instanceof Zend_Db_Table_Row) {
+        if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
 
         if (is_array($options)) {
             $this->setOptions($options);
         }
+
+        $this->init();
     }
 
     /**
-     * Sets the property in this class.
-     *
-     * @param string $key
-     * @param mixed $value
+     * Constructor extensions
      */
-    public function __set($key, $value)
-    {
-       if (!is_object($this->_data)) $this->_data = new stdClass();
-
-       if (method_exists($this, 'set' . ucfirst($key))) {
-            $method = 'set' . ucfirst($key);
-            $this->$method($value);
-        } else {
-            $this->_data->$key = $value;
-        }
-
-        return $this;
-    }
+    public function init()
+    {}
 
     /**
-     * Gets the property in this class.
-     *
-     * @param string $name
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        if (method_exists($this, 'get' . ucfirst($key))) {
-            $method = 'get' . ucfirst($key);
-            return $this->$method();
-        } else {
-            return (isset($this->_data->$key)) ? $this->_data->$key : null;
-        }
-    }
-
-    /**
-     * General getter method to get column value from database table.
-     *
-     * @param string $col
-     * @return mixed
-     */
-    public function get($col)
-    {
-        return $this->$col;
-    }
-
-    /**
-     * Gets the model id
-     *
-     * @return string|null
-     */
-    public function getId()
-    {
-        return (isset($this->_data->{$this->_primary})) ? $this->_data->{$this->_primary} : null;
-    }
-
-    /**
-     * Gets the model prefix.
-     *
-     * @return string $_prefix
-     */
-    public function getPrefix()
-    {
-        return $this->_prefix;
-    }
-
-    /**
-     * Sets the options for this class.
+     * Set options using setter methods
      *
      * @param array $options
      * @return ZendSF_Model_Abstract
      */
     public function setOptions(array $options)
     {
-        // remove the table prefix and set the value.
-        foreach ($options as $key => $value) {
-            if (is_string($this->_prefix)) {
-                $key = str_replace($this->_prefix, '', $key);
-            }
-
-            $this->$key = $value;
+        if (null === $this->_classMethods) {
+            $this->_classMethods = get_class_methods($this);
         }
 
-        return $this;
-    }
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $this->_classMethods)) {
+                $this->$method($value);
+            }
+        }
 
-    public function setCols($cols)
-    {
-        $this->_cols = (array) $cols;
         return $this;
     }
 
     /**
-     * turns the model into an array of values.
+     * Gets the database table object.
      *
-     * @param string $dateFormat
-     * @return array
+     * @return Zend_Db_Table_Abstract
      */
-    public function toArray($dateFormat = null)
+    public function getDbTable($name)
+	{
+        if (!isset($this->_dbTables[$name])) {
+            $class = join('_', array(
+                $this->_getNamespace(),
+                'Model',
+                'DbTable',
+                $this->_getInflected($name)
+            ));
+            $this->_dbTables[$name] = new $class();
+        }
+	    return $this->_dbTables[$name];
+	}
+
+    /**
+     * Gets a Form
+     *
+     * @param string $name
+     * @return Zend_Form
+     */
+    public function getForm($name)
     {
-        $array = array();
+        if (!isset($this->_forms[$name])) {
+            $class = join('_', array(
+                    $this->_getNamespace(),
+                    'Form',
+                    $this->_getInflected($name)
+            ));
+            $this->_forms[$name] = new $class(array('model' => $this));
+        }
+	    return $this->_forms[$name];
+    }
 
-        foreach ($this->_data as $key => $value) {
+    /**
+     * returns an object of database values to use with Dojo data.
+     *
+     * @param Zend_Db_Table_Rowset
+     * @param string $id
+     * @return Zend_Dojo_Data
+     */
+    public function getDojoDataStore(Zend_Db_Table_Rowset $dataObj, $id)
+    {
+        $items = array();
 
-            if ($value instanceof Zend_Currency) {
-                $value = $value->getValue();
-            }
-
-            if ($value instanceof Zend_Date) {
-                if (null === $this->_dateFormat) {
-                    $value = $value->getTimestamp();
-                } elseif ($dateFormat) {
-                    $value = $value->toString($dateFormat);
-                } else {
-                    $value = $value->toString($this->_dateFormat);
-                }
-            }
-
-            // put the table prefix back.
-            if (is_string($this->_prefix) &&
-                    in_array($this->_prefix . lcfirst($key), $this->_cols)) {
-                $key = $this->_prefix . lcfirst($key);
-            }
-
-            $array[$key] = $value;
+        foreach ($dataObj as $row) {
+            $items[] = $row->toArray();
         }
 
-        return $array;
+        return new Zend_Dojo_Data($id, $items);
+    }
+
+    /**
+     * Set the cache to use.
+     *
+     * @param ZendSF_Model_Abstract $cache
+     */
+    public function setCache(ZendSF_Model_Cache_Abstract $cache)
+    {
+        $this->_cache = $cache;
+    }
+
+    /**
+     * Set the options
+     *
+     * @param array $options
+     */
+    public function setCacheOptions(array $options)
+    {
+        $this->_cacheOptions = $options;
+    }
+
+    /**
+     * Get the cache options
+     *
+     * @return array
+     */
+    public function getCacheOptions()
+    {
+        if (empty($this->_cacheOptions)) {
+           $cacheOptions = Zend_Registry::get('config')
+                ->cache
+                ->model;
+
+            $this->_cacheOptions = array(
+                'frontend'          => $cacheOptions->frontend->type,
+                'backend'           => $cacheOptions->backend->type,
+                'frontendOptions'   => $cacheOptions->frontendOptions->toArray(),
+                'backendOptions'    => $cacheOptions->backendOptions->toArray()
+            );
+        }
+
+        return $this->_cacheOptions;
+    }
+
+    /**
+     * Query the cache
+     *
+     * @param type $tagged The tag to save data to
+     * @return ZendSF_Model_Cache_Abstract
+     */
+    public function getCached($tagged = null)
+    {
+        if (null === $this->_cache) {
+            $this->_cache = new ZendSF_Model_Cache(
+                $this,
+                $this->getCacheOptions()
+            );
+        }
+
+        $this->_cache->setTagged($tagged);
+
+        return $this->_cache;
+    }
+    /**
+     * Classes are named spaced using their module name
+     * this returns that module name or the first class name segment.
+     *
+     * @return string This class namespace
+     */
+    protected function _getNamespace()
+    {
+        $ns = explode('_', get_class($this));
+        return $ns[0];
+    }
+
+    /**
+     * Inflect the name using the inflector filter
+     *
+     * Changes camelCaseWord to Camel_Case_Word
+     *
+     * @param string $name The name to inflect
+     * @return string The inflected string
+     */
+    protected function _getInflected($name)
+    {
+        $inflector = new Zend_Filter_Inflector(':class');
+        $inflector->setRules(array(
+            ':class'  => array('Word_CamelCaseToUnderscore')
+        ));
+        return ucfirst($inflector->filter(array('class' => $name)));
     }
 }

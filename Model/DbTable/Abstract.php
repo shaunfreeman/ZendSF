@@ -64,7 +64,7 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
 
     /**
      * Delete a row in the database.
-     * 
+     *
      * @param in $id Primary key of the row to be deleted
      * @return int The number of rows deleted
      */

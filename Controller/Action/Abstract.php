@@ -40,7 +40,7 @@
 abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
 {
     /**
-     * @var ZendSF_Model_Mapper_Abstract
+     * @var ZendSF_Model_Abstract
      */
     protected $_model;
 
@@ -70,7 +70,7 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
 
         // turn off layout if ajax request
         if ($this->_request->isXmlHttpRequest()) {
-            $this->view->layout()->disableLayout();
+            $this->_helper->layout->disableLayout();
         }
 
     }
@@ -114,23 +114,5 @@ abstract class ZendSF_Controller_Action_Abstract extends Zend_Controller_Action
     {
        $this->_log->info(__METHOD__);
        throw new ZendSF_Exception_404('Page not found');
-    }
-
-    /**
-     * returns an array of database objects in Json format to use with Dojo.
-     *
-     * @param array $dataObj
-     * @param string $id
-     * @return Zend_Dojo_Data
-     */
-    public function getDataStore($dataObj, $id)
-    {
-        $items = array();
-
-        foreach ($dataObj as $row) {
-            $items[] = $row->toArray($this->_dateFormat);
-        }
-        
-        return new Zend_Dojo_Data($id, $items);
     }
 }

@@ -21,7 +21,7 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Model_Mapper_Cache
+ * @subpackage Model_Cache
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
@@ -34,12 +34,12 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Model_Mapper_Cache
+ * @subpackage Model_Cache
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-abstract class ZendSF_Model_Mapper_Cache_Abstract
+abstract class ZendSF_Model_Cache_Abstract
 {
     /**
      * @var array Class methods
@@ -72,7 +72,7 @@ abstract class ZendSF_Model_Mapper_Cache_Abstract
     protected $_backendOptions = array();
 
     /**
-     * @var ZendSF_Model_Mapper_Abstract
+     * @var ZendSF_Model_Abstract
      */
     protected $_model;
 
@@ -84,11 +84,11 @@ abstract class ZendSF_Model_Mapper_Cache_Abstract
     /**
      * Constructor
      *
-     * @param ZendSF_Model_Mapper_Abstract $model
+     * @param ZendSF_Model_Abstract $model
      * @param array|Zend_Config $options
      * @param string $tagged
      */
-    public function __construct(ZendSF_Model_Mapper_Abstract $model, $options, $tagged = null)
+    public function __construct(ZendSF_Model_Abstract $model, $options, $tagged = null)
     {
         $this->_model = $model;
 
@@ -107,7 +107,7 @@ abstract class ZendSF_Model_Mapper_Cache_Abstract
      * Set options using setter method
      *
      * @param array $options
-     * @return ZendSF_Model_Mapper_Cache_Abstract
+     * @return ZendSF_Model_Cache_Abstract
      */
     public function setOptions(array $options)
     {

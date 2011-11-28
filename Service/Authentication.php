@@ -64,9 +64,9 @@ class ZendSF_Service_Authentication
     /**
      * Construct
      *
-     * @param null|ZendSF_Model_Mapper_Abstract $userModel
+     * @param null|ZendSF_Model_Abstract $userModel
      */
-    public function __construct(ZendSF_Model_Mapper_Abstract $userModel = null)
+    public function __construct(ZendSF_Model_Abstract $userModel = null)
     {
         $this->_options = Zend_Registry::get('config')
                     ->user
