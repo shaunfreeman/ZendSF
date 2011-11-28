@@ -119,7 +119,7 @@ abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
         if ($this->_row) {
             $referenceMap = $this->_row->getTable()->info('referenceMap');
             $row = $this->_row->findParentRow($referenceMap[$rule]['refTableClass'], $rule);
-            $this->set($row->toArray());
+            if ($row) $this->set($row->toArray());
         }
         return $this;
     }
