@@ -79,11 +79,14 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     * Abstract method, must be overridden and used.
+     * must be overridden by child class.
      *
      * @param mixed $search
      */
-    abstract public function numRows($search);
+    public function numRows($search)
+    {
+        return false;
+    }
 
     /**
      * Adds limit and offset to query.
