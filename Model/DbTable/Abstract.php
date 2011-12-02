@@ -65,7 +65,7 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
     /**
      * Delete a row in the database.
      *
-     * @param in $id Primary key of the row to be deleted
+     * @param int $id Primary key of the row to be deleted
      * @return int The number of rows deleted
      */
     public function deleteRow($id)
@@ -77,6 +77,13 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
         $row = $this->find($id)->current();
         return $row->delete();
     }
+
+    /**
+     * Abstract method, must be overridden and used.
+     *
+     * @param mixed $search
+     */
+    abstract public function numRows($search);
 
     /**
      * Adds limit and offset to query.

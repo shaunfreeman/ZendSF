@@ -124,7 +124,7 @@ abstract class ZendSF_Model_Abstract
                 $this->_getNamespace(),
                 'Model',
                 'DbTable',
-                $this->_getInflected($name)
+                ZendSF_Utility_String::getInflected($name)
             ));
             $this->_dbTables[$name] = new $class();
         }
@@ -143,7 +143,7 @@ abstract class ZendSF_Model_Abstract
             $class = join('_', array(
                     $this->_getNamespace(),
                     'Form',
-                    $this->_getInflected($name)
+                    ZendSF_Utility_String::getInflected($name)
             ));
             $this->_forms[$name] = new $class(array('model' => $this));
         }
@@ -166,41 +166,6 @@ abstract class ZendSF_Model_Abstract
         }
 
         return new Zend_Dojo_Data($id, $items);
-    }
-
-    /**
-     * Gets and formats Dojo Data ready for Dojo DataGrid.
-     *
-     * @param array $post
-     * @param string $form
-     * @param string $dbTable
-     * @param string $method
-     * @param string $identifier
-     * @return string
-     */
-    protected function _getDojoDataStore(array $post, $form, $dbTable, $method, $identifier)
-    {
-        $sort = $post['sort'];
-        $count = $post['count'];
-        $start = $post['start'];
-
-        $form = $this->getForm($form);
-        $search = array();
-
-        if ($form->isValid($post)) {
-            $search = $form->getValues();
-        }
-
-        $dataObj = $this->getDbTable($dbTable)->$method($search, $sort, $count, $start);
-
-        $store = $this->_getDojoData($dataObj, $identifier);
-
-        $store->setMetadata(
-            'numRows',
-            $this->getDbTable($dbTable)->numRows($search)
-        );
-
-        return $store->toJson();
     }
 
     /**
@@ -275,22 +240,5 @@ abstract class ZendSF_Model_Abstract
     {
         $ns = explode('_', get_class($this));
         return $ns[0];
-    }
-
-    /**
-     * Inflect the name using the inflector filter
-     *
-     * Changes camelCaseWord to Camel_Case_Word
-     *
-     * @param string $name The name to inflect
-     * @return string The inflected string
-     */
-    protected function _getInflected($name)
-    {
-        $inflector = new Zend_Filter_Inflector(':class');
-        $inflector->setRules(array(
-            ':class'  => array('Word_CamelCaseToUnderscore')
-        ));
-        return ucfirst($inflector->filter(array('class' => $name)));
     }
 }

@@ -40,7 +40,7 @@
 class ZendSF_Form_Abstract extends Zend_Dojo_Form
 {
     /**
-     * @var ZendSF_Model_Mapper_Abstract
+     * @var ZendSF_Model_Abstract
      */
     protected $_model;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * MapperHelper.php
+ * ModelHelper.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -28,7 +28,7 @@
  */
 
 /**
- * Base helper for form mappers.  Extend this, don't use it on its own.
+ * Base helper for form models.  Extend this, don't use it on its own.
  *
  * @category   ZendSF
  * @package    ZendSF
@@ -37,10 +37,10 @@
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
+abstract class ZendSF_View_Helper_ModelHelper extends Zend_View_Helper_Abstract
 {
     /**
-     * @var ZendSF_Model_Mapper_Abstract
+     * @var ZendSF_Model_Abstract
      */
     protected $_model;
 
@@ -62,7 +62,7 @@ abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
     /**
      * Gets the database mapper.
      *
-     * @return Zend_Model_Mapper_Abstract
+     * @return Zend_Model_Abstract
      */
     public function getModel()
     {
@@ -76,7 +76,7 @@ abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
      * Sets the database mapper.
      *
      * @param string $model
-     * @return ZendSF_View_Helper_MapperHelper
+     * @return ZendSF_View_Helper_ModelHelper
      */
     protected function setModel($model)
     {
@@ -99,7 +99,7 @@ abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
      * Sets data from the database row to return later.
      *
      * @param array $data
-     * @return ZendSF_View_Helper_MapperHelper
+     * @return ZendSF_View_Helper_ModelHelper
      */
     protected function set(array $data)
     {
@@ -112,7 +112,7 @@ abstract class ZendSF_View_Helper_MapperHelper extends Zend_View_Helper_Abstract
      * Gets parent row by rule definition.
      *
      * @param string $rule
-     * @return ZendSF_View_Helepr_MapperHelper
+     * @return ZendSF_View_Helepr_ModelHelper
      */
     public function getParentRow($rule)
     {
