@@ -79,16 +79,6 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     * must be overridden by child class.
-     *
-     * @param mixed $search
-     */
-    public function numRows($search)
-    {
-        return false;
-    }
-
-    /**
      * Adds limit and offset to query.
      *
      * @param Zend_Db_Table_Select
@@ -118,7 +108,7 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
             return $select;
         }
 
-        if(strchr($sort,'-')) {
+        if (strchr($sort,'-')) {
             $sort = substr($sort, 1, strlen($sort));
             $order = 'DESC';
         } else {
