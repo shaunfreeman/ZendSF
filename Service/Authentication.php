@@ -68,12 +68,10 @@ class ZendSF_Service_Authentication
      */
     public function __construct(ZendSF_Model_Abstract $userModel = null)
     {
-        $this->_options = Zend_Registry::get('config')
-                    ->user
-                    ->auth;
+        $this->_options = Zend_Registry::get('config')->user->auth;
 
         $this->_userModel = (null === $userModel) ?
-                new $this->_options->userModel() : $userModel;
+            new $this->_options->userModel() : $userModel;
     }
 
     /**
@@ -92,10 +90,8 @@ class ZendSF_Service_Authentication
             return false;
         }
 
-        $method = 'getUserBy' . ucwords($this->_options->method);
-
         $user = $this->_userModel
-            ->$method($credentials[$this->_options->identity]);
+            ->{$this->_options->method}($credentials[$this->_options->identity]);
 
         $auth->getStorage()->write($user);
 
@@ -163,11 +159,11 @@ class ZendSF_Service_Authentication
             $this->_authAdapter->setIdentity($values[$this->_options->identity]);
 
             $this->_authAdapter->setCredential(
-                    ZendSF_Utility_Password::$treatment(
-                        $values[$this->_options->credential]
-                        . $this->_options->salt
-                    )
-                );
+                ZendSF_Utility_Password::$treatment(
+                    $values[$this->_options->credential]
+                    . $this->_options->salt
+                )
+            );
         }
 
         return $this->_authAdapter;
