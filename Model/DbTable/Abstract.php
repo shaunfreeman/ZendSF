@@ -104,7 +104,7 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
      */
     public function getSortOrder(Zend_Db_Table_Select $select, $sort)
     {
-        if ($sort === '') {
+        if ($sort === '' || null === $sort) {
             return $select;
         }
 
