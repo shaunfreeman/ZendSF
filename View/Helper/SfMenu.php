@@ -60,7 +60,7 @@ class ZendSF_View_Helper_SfMenu extends Zend_View_Helper_Navigation_Menu
     /**
      * @var string subIndicator
      */
-    protected $_subIndicator = '';
+    protected $_subIndicator = ' &raquo;';
 
     protected $_identity;
 

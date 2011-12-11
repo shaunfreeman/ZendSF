@@ -33,7 +33,7 @@
  * @subpackage Model_DbTable
  * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Model_DbTable_Widget extends Zend_Db_Table_Abstract
+class ZendSF_Model_DbTable_Widget extends ZendSF_Model_DbTable_Abstract
 {
     protected $_name = 'widget';
     protected $_primary = 'widgetId';
@@ -42,8 +42,19 @@ class ZendSF_Model_DbTable_Widget extends Zend_Db_Table_Abstract
     protected $_referenceMap = array(
         'Group' => array(
             'columns'       => 'widgetGroupId',
-            'refTableClass' => 'ZendSF_Model_DbTable_WidgetGroup',
+            'refTableClass' => 'ZendSF_Model_DbTable_Widget_Group',
             'refColumns'    => 'widgetGroupId'
         )
     );
+
+    public function getWidgetById($id)
+    {
+        return $this->find($id)->current();
+    }
+
+    public function getWidgetByName($name)
+    {
+        $select = $this->select()->where('name = ?', $name);
+        return $this->fetchRow($select);
+    }
 }

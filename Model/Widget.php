@@ -1,6 +1,6 @@
 <?php
 /**
- * WidgetGroup.php
+ * Widget.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -17,32 +17,59 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ZendSF.  If not, see <http ://www.gnu.org/licenses/>.
+ * along with ZendSF.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @category ZendSF
- * @package ZendSF
- * @subpackage Model_DbTable
+ * @category   ZendSF
+ * @package    ZendSF
+ * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Description of ZendSF_Model_DbTable_Widget_Group
+ * Widget Model.
  *
- * @category ZendSF
- * @package ZendSF
- * @subpackage Model_DbTable
+ * @category   ZendSF
+ * @package    ZendSF
+ * @subpackage Model
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Model_DbTable_WidgetGroup extends Zend_Db_Table_Abstract
+class ZendSF_Model_Widget extends ZendSF_Model_Acl_Abstract
 {
-    protected $_name = 'widgetGroup';
-    protected $_primary = 'widgetGroupId';
-    protected $_rowClass = 'ZendSF_Model_DbTable_Row_WidgetGroup';
+    public function getWidgetById($id)
+    {
+        $id = (int) $id;
+        return $this->getDbTable('widget')->getWidgetById($id);
+    }
 
-    protected $_dependentTables = array('ZendSF_Model_DbTable_Widget');
+    public function getWidgetGroupById($id)
+    {
+        $id = (int) $id;
+        return $this->getDbTable('widgetGroup')->getWidgetGroupById($id);
+    }
+
+    public function getWidgetByName($name)
+    {
+        $name = (string) $name;
+        return $this->getDbTable('widget')->getWidgetByName($name);
+    }
+
+    public function getWidgetsByGroup($name)
+    {
+        $name = (string) $name;
+        $group = $this->getDbTable('widgetGroup')->getWidgetGroupByName($name);
+        return $group->getWidgets();
+    }
+
+    public function setAcl($acl)
+    {
+        parent::setAcl($acl);
+
+        $this->_acl->allow('admin', $this);
+
+        return $this;
+    }
 }
-

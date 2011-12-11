@@ -45,9 +45,9 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
     protected $_widget = null;
 
     /**
-     * @var ZendSF_Model_Mapper_Widget
+     * @var ZendSF_Model_Widget
      */
-    protected $_DbTable;
+    protected $_model;
 
     /**
      * Constructor can take two arguments, name of widget/widget group name and
@@ -59,7 +59,7 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
      */
     public function widget($name = null, $group = false)
     {
-        $this->_DbTable = new ZendSF_Model_Mapper_Widget();
+        $this->_model = new ZendSF_Model_Widget();
 
         if (is_string($name) && $group === false) {
             return $this->getWidgetByName($name);
@@ -78,9 +78,9 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
      */
     public function getWidgetByName($name)
     {
-        $widget = $this->_DbTable->getWidgetByName($name);
+        $widget = $this->_model->getWidgetByName($name);
 
-        if ($widget instanceof ZendSF_Model_Abstract) {
+        if ($widget instanceof ZendSF_Model_DbTable_Row_Widget) {
             $widgetClass = $widget->widget;
             $this->_widget = new $widgetClass($widget);
         } else {
@@ -99,7 +99,7 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
     public function getWidgetsByGroup($group)
     {
         $this->_widget = array();
-        $widgets = $this->_DbTable->getWidgetsByGroup($group, true);
+        $widgets = $this->_model->getWidgetsByGroup($group, true);
 
         foreach ($widgets as $widget) {
            $widgetClass = $widget->widget;

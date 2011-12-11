@@ -1,6 +1,6 @@
 <?php
 /**
- * Request.php
+ * Group.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -17,60 +17,43 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ZendSF.  If not, see <http://www.gnu.org/licenses/>.
+ * along with ZendSF.  If not, see <http ://www.gnu.org/licenses/>.
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage View_Helper
+ * @subpackage Model_DbTable
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Exposes the request object and all its methods to the view.
- *
- * example:
- * <code>
- * <?php
- * $this->request()->getParams();
- * ?>
- * </code>
+ * Description of ZendSF_Model_DbTable_Widget_Group
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage View_Helper
+ * @subpackage Model_DbTable
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_View_Helper_Request extends Zend_View_Helper_Abstract
+class ZendSF_Model_DbTable_Widget_Group extends ZendSF_Model_DbTable_Abstract
 {
-    /**
-     * @var Zend_Controller_Request_Abstract
-     */
-    protected $_request;
+    protected $_name = 'widgetGroup';
+    protected $_primary = 'widgetGroupId';
+    protected $_rowClass = 'ZendSF_Model_DbTable_Row_Widget_Group';
 
-    /**
-     * @return ZendSF_View_Helper_Request
-     */
-    public function request()
+    protected $_dependentTables = array('ZendSF_Model_DbTable_Widget');
+
+    public function getWidgetGroupById($id)
     {
-        if (!$this->_request instanceof Zend_Controller_Request_Abstract) {
-            $this->_request = Zend_Controller_Front::getInstance()->getRequest();
-        }
-        return $this;
+        return $this->find($id)->current();
     }
 
-    /**
-     * Proxy method calls to the request object.
-     *
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call($method, array $arguments)
+    public function getWidgetGroupByName($name)
     {
-        return call_user_func_array(array($this->_request, $method), $arguments);
+        $select = $this->select()->where('widgetGroup = ?', $name);
+        return $this->fetchRow($select);
     }
 }
+

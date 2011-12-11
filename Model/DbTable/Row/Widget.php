@@ -1,6 +1,6 @@
 <?php
 /**
- * Request.php
+ * Widget.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -21,56 +21,26 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage View_Helper
+ * @subpackage Model_DbTable_Row
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Exposes the request object and all its methods to the view.
- *
- * example:
- * <code>
- * <?php
- * $this->request()->getParams();
- * ?>
- * </code>
+ * Database class for the Widget table row.
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage View_Helper
+ * @subpackage Model_DbTable_Row
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_View_Helper_Request extends Zend_View_Helper_Abstract
+class ZendSF_Model_DbTable_Row_Widget extends ZendSF_Model_DbTable_Row_Abstract
 {
-    /**
-     * @var Zend_Controller_Request_Abstract
-     */
-    protected $_request;
-
-    /**
-     * @return ZendSF_View_Helper_Request
-     */
-    public function request()
+    public function getParams()
     {
-        if (!$this->_request instanceof Zend_Controller_Request_Abstract) {
-            $this->_request = Zend_Controller_Front::getInstance()->getRequest();
-        }
-        return $this;
-    }
-
-    /**
-     * Proxy method calls to the request object.
-     *
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call($method, array $arguments)
-    {
-        return call_user_func_array(array($this->_request, $method), $arguments);
+        return parse_ini_string($this->getRow()->params, true);
     }
 }
