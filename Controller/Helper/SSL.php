@@ -1,6 +1,6 @@
 <?php
 /**
- * Menu.php
+ * SSL.php
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
@@ -17,38 +17,37 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Uthando-CMS.  If not, see <http ://www.gnu.org/licenses/>.
+ * along with ZendSF.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Widget
+ * @subpackage Controller
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Description of ZendSF_Widget_Menu
+ * SSL Model.
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Widget
+ * @subpackage Controller
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Widget_Menu extends ZendSF_Widget_Acl
+class ZendSF_Controller_Helper_SSL extends Zend_Controller_Action_Helper_Abstract
 {
-    protected $_viewTemplate = 'widget.phtml';
-
-    protected function init()
+    public function direct()
     {
-        $this->_view->widget->html = $this->_view
-            ->navigation()
-            ->sfMenu($this->_view->params['menu'])
-            //->setAcl($this->getAcl())
-            //->setRole($this->getRole())
-            ->setUlClass($this->_view->params['ul_class'])
-            ->render();
+        if (! isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS']) {
+            $request    = $this->getRequest();
+            $url        = 'https://'
+                . $_SERVER['HTTP_HOST']
+                . $request->getRequestUri();
+            $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+            $redirector->gotoUrl($url);
+        }
     }
 }
