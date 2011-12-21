@@ -63,12 +63,14 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     * Delete a row in the database.
+     * Delete a row in the database. Maybe should only be defined i parent class
+     * as can be different if we have a compound primary key. or use mixed interger or
+     * array.
      *
      * @param int $id Primary key of the row to be deleted
      * @return int The number of rows deleted
      */
-    public function deleteRow($id)
+    /*public function deleteRow($id)
     {
         if (!is_numeric($id)) {
             throw new ZendSF_Model_Exception('Could not delete row in ' . __CLASS__);
@@ -76,7 +78,7 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
 
         $row = $this->find($id)->current();
         return $row->delete();
-    }
+    }*/
 
     /**
      * Adds limit and offset to query.
