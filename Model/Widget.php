@@ -64,7 +64,7 @@ class ZendSF_Model_Widget extends ZendSF_Model_Acl_Abstract
         return $group->getWidgets();
     }
 
-    public function setAcl($acl)
+    public function setAcl(Zend_Acl $acl)
     {
         parent::setAcl($acl);
 
