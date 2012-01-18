@@ -45,6 +45,11 @@ abstract class ZendSF_Model_DbTable_Row_Abstract
     protected $_row = null;
 
     /**
+     * @var Zend_Log
+     */
+    protected $_log;
+
+    /**
      * Constructor.
      *
      * Supported params for $config are:-
@@ -56,6 +61,7 @@ abstract class ZendSF_Model_DbTable_Row_Abstract
     public function __construct(array $config = array())
     {
         $this->setRow($config);
+        $this->_log = Zend_Registry::get('dblog');
     }
 
     /**
@@ -155,5 +161,20 @@ abstract class ZendSF_Model_DbTable_Row_Abstract
             $table = new $tableClass();
             $this->getRow()->setTable($table);
         }
+    }
+
+    protected function _insert()
+    {
+        $this->_log->info($this->_data, "INSERT: $this->_tableClass", false);
+    }
+
+    protected function _update()
+    {
+        $this->_log->info($this->_data, "UPDATE: $this->_tableClass", false);
+    }
+
+    protected function _delete()
+    {
+        $this->_log->info($this->_data, "DELETE: $this->_tableClass", false);
     }
 }

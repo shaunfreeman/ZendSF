@@ -40,6 +40,16 @@
 abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
 {
     /**
+     * @var Zend_Log
+     */
+    protected $_log;
+
+    public function init()
+    {
+        $this->_log = Zend_Registry::get('dblog');
+    }
+
+    /**
      * Save a row to the database
      *
      * @param array $data The data to insert/update
@@ -63,7 +73,7 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     * Delete a row in the database. Maybe should only be defined i parent class
+     * Delete a row in the database. Maybe should only be defined in parent class
      * as can be different if we have a compound primary key. or use mixed interger or
      * array.
      *
