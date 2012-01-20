@@ -21,53 +21,27 @@
  *
  * @category   ZendSF
  * @package    ZendSF_Dojo
- * @subpackage View
+ * @subpackage Form_Element
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
- * Dojo TextBox dijit
+ * TextBox dijit
  *
  * @category   ZendSF
  * @package    ZendSF_Dojo
- * @subpackage View
+ * @subpackage Form_Element
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-class ZendSF_Dojo_View_Helper_DojoTextBox extends Zend_Dojo_View_Helper_TextBox
+class ZendSF_Dojo_Form_Element_ZendSFDojoTextBox extends Zend_Dojo_Form_Element_TextBox
 {
     /**
-     * dijit.form.TextBox
-     *
-     * @param  int $id
-     * @param  mixed $value
-     * @param  array $params  Parameters to use for dijit creation
-     * @param  array $attribs HTML attributes
-     * @return string
+     * Use TextBox dijit view helper
+     * @var string
      */
-    public function dojoTextBox($id, $value = null, array $params = array(), array $attribs = array())
-    {
-        return $this->textBox($id, $value, $params, $attribs);
-    }
-
-    /**
-     * Converts an associative array to a string of tag attributes.
-     *
-     * @access public
-     *
-     * @param array $attribs From this array, each key-value pair is
-     * converted to an attribute name and value.
-     *
-     * @return string The XHTML for the attributes.
-     */
-    protected function _htmlAttribs($attribs)
-    {
-        if (isset($attribs['required']) && $attribs['required'] == 'false') {
-            unset($attribs['required']);
-        }
-        return parent::_htmlAttribs($attribs);
-    }
+    public $helper = 'ZendSFDojoTextBox';
 }
