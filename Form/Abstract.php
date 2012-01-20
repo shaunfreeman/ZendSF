@@ -154,6 +154,18 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
     );
 
     /**
+     * Constructor
+     *
+     * @param  array|Zend_Config|null $options
+     * @return void
+     */
+    public function __construct($options = null)
+    {
+        $this->addPrefixPath('ZendSF_Dojo_Form_Element', 'ZendSF/Dojo/Form/Element', 'element');
+        parent::__construct($options);
+    }
+
+    /**
      * Loads the default form decorators.
      */
     public function loadDefaultDecorators()
@@ -266,5 +278,23 @@ class ZendSF_Form_Abstract extends Zend_Dojo_Form
     public function getModel()
     {
         return $this->_model;
+    }
+
+    /**
+     * Set the view object
+     *
+     * Ensures that the view object has the dojo view helper path set.
+     *
+     * @param  Zend_View_Interface $view
+     * @return Zend_Dojo_Form_Element_Dijit
+     */
+    public function setView(Zend_View_Interface $view = null)
+    {
+        if (null !== $view) {
+            if (false === $view->getPluginLoader('helper')->getPaths('ZendSF_Dojo_View_Helper')) {
+                $view->addHelperPath('ZendSF/Dojo/View/Helper', 'ZendSF_Dojo_View_Helper');
+            }
+        }
+        return parent::setView($view);
     }
 }
