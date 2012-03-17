@@ -54,20 +54,19 @@ class ZendSF_Controller_Plugin_Mobile extends Zend_Controller_Plugin_Abstract
         }
 
 
-        $userAgent = $bootstrap->getResourse('useragent');
+        $userAgent = $bootstrap->getResource('useragent');
         $device = $userAgent->getDevice();
 
         if ($device->getBrowserType() == 'mobile') {
             if ($frontController->getParam('mobileLayout') === 1) {
                 $suffix = $bootstrap->getResource('layout')->getViewSuffix();
                 $bootstrap->getResource('layout')->setViewSuffix('mobile.', $suffix);
+                Zend_Layout::getMvcInstance()->setLayout('mobile');
             }
 
             if ($frontController->getParam('mobileViews') == "1") {
                 Zend_Controller_Action_HelperBroker::getStaticHelper('MobileContext')->enable();
             }
-
-            Zend_Layout::getMvcInstance()->setLayout('mobile');
         }
 
     }
