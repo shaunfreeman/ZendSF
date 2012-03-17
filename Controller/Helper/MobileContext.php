@@ -38,7 +38,7 @@
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
-class ZendSF_Controller_Action_Helper_MobileContext extends Zend_Controller_Action_Helper_ContextSwitch
+class ZendSF_Controller_Helper_MobileContext extends Zend_Controller_Action_Helper_ContextSwitch
 {
     /**
      * Flag to enable layout based on WURFL detection
