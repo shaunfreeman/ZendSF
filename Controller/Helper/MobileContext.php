@@ -20,7 +20,7 @@
  * along with ZendSF.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @category   ZendSF
- * @package
+ * @package    ZendSF
  * @subpackage Controller
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
@@ -31,7 +31,7 @@
  * Controller Class MobileContext.
  *
  * @category   ZendSF
- * @package
+ * @package    ZendSF
  * @subpackage Controller
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
