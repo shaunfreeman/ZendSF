@@ -39,39 +39,14 @@
  */
 class ZendSF_Model_DbTable_NestedSetAbstract extends ZendSF_Model_DbTable_Abstract
 {
-    /**
-     * @var string database table
-     */
-    protected $_name = '';
-
-    /**
-     * @var string primary key
-     */
-    protected $_primary = '';
-
-    /**
-     * @var string row class.
-     */
-    protected $_rowClass = '';
-
-    /**
-     * @var array Reference map for parent tables
-     */
-    protected $_referenceMap = array();
-
-    public function getCategoryById($id)
-    {
-        return $this->find($id)->current();
-    }
-
     public function getAll()
     {
         $select = $this->select()
             ->from(array('child' => $this->_name))
             ->joinCross(array('parent' => $this->_name), null)
-            ->columns(array('depth' => '(COUNT(parent.'.$this->_primary.') - 1)'))
+            ->columns(array('depth' => '(COUNT(parent.'.$this->_primary[1].') - 1)'))
             ->where('child.lft BETWEEN parent.lft AND parent.rgt')
-            ->group('child.'.$this->_primary)
+            ->group('child.'.$this->_primary[1])
             ->order('child.lft');
 
         return $this->fetchAll($select);
@@ -83,7 +58,7 @@ class ZendSF_Model_DbTable_NestedSetAbstract extends ZendSF_Model_DbTable_Abstra
             ->from(array('child' => $this->_name), null)
             ->joinCross(array('parent' => $this->_name), array('*'))
             ->where('child.lft BETWEEN parent.lft AND parent.rgt')
-            ->where('child.'.$this->_primary.' = ?', $id)
+            ->where('child.'.$this->_primary[1].' = ?', $id)
             ->order('parent.lft');
 
         return $this->fetchAll($select);
@@ -94,10 +69,10 @@ class ZendSF_Model_DbTable_NestedSetAbstract extends ZendSF_Model_DbTable_Abstra
         $subTree = $this->select()
             ->from(array('child' => $this->_name))
             ->joinCross(array('parent' => $this->_name), null)
-            ->columns(array('depth' => '(COUNT(parent.'.$this->_primary.') - 1)'))
+            ->columns(array('depth' => '(COUNT(parent.'.$this->_primary[1].') - 1)'))
             ->where('child.lft BETWEEN parent.lft AND parent.rgt')
-            ->where('child.'.$this->_primary.' = ?', $parentId)
-            ->group('child.'.$this->_primary)
+            ->where('child.'.$this->_primary[1].' = ?', $parentId)
+            ->group('child.'.$this->_primary[1])
             ->order('child.lft');
 
         $select = $this->select()
@@ -105,11 +80,11 @@ class ZendSF_Model_DbTable_NestedSetAbstract extends ZendSF_Model_DbTable_Abstra
             ->joinCross(array('parent' => $this->_name), null)
             ->joinCross(array('subParent' => $this->_name), null)
             ->joinCross(array('subTree' => new Zend_Db_Expr('('.$subTree.')')), null)
-            ->columns(array('depth' => '(COUNT(parent.'.$this->_primary.') - (subTree.depth + 1))'))
+            ->columns(array('depth' => '(COUNT(parent.'.$this->_primary[1].') - (subTree.depth + 1))'))
             ->where('child.lft BETWEEN parent.lft AND parent.rgt')
             ->where('child.lft BETWEEN subParent.lft AND subParent.rgt')
-            ->where('subParent.'.$this->_primary.' = subTree.'.$this->_primary)
-            ->group('child.'.$this->_primary)
+            ->where('subParent.'.$this->_primary[1].' = subTree.'.$this->_primary[1])
+            ->group('child.'.$this->_primary[1])
             ->order('child.lft');
 
         if (true === $immediate) {
