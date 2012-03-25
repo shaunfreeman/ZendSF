@@ -61,7 +61,5 @@ abstract class ZendSF_Acl_Abstract extends Zend_Acl
      * Constructor extention
      */
     public function init()
-    {
-
-    }
+    {}
 }

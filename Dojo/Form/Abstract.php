@@ -4,36 +4,40 @@
  *
  * Copyright (c) 2011 Shaun Freeman <shaun@shaunfreeman.co.uk>.
  *
- * This file is part of Uthando-CMS.
+ * This file is part of ZendSF.
  *
- * Uthando-CMS is free software: you can redistribute it and/or modify
+ * ZendSF is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Uthando-CMS is distributed in the hope that it will be useful,
+ * ZendSF is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Uthando-CMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with ZendSF.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @category ZendSF
- * @package ZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Form
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
 
 /**
  * Base class for forms.
  *
- * @category ZendSF
- * @package UZendSF
+ * @category   ZendSF
+ * @package    ZendSF
  * @subpackage Form
- * @author Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license    http://www.gnu.org/licenses GNU General Public License
+ * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
  */
-abstract class ZendSF_Form_Abstract extends Zend_Form
+class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
 {
     /**
      * @var ZendSF_Model_Abstract
@@ -81,7 +85,7 @@ abstract class ZendSF_Form_Abstract extends Zend_Form
      * @var array
      */
     protected $_elementDecorators = array(
-        'ViewHelper',
+        'DijitElement',
         'Errors',
         'Description',
         array(
@@ -142,12 +146,24 @@ abstract class ZendSF_Form_Abstract extends Zend_Form
     );
 
     protected $_submitDecorators = array(
-        'ViewHelper',
+        'DijitElement',
         array(
             'HtmlTag',
             array('tag' => 'span')
         )
     );
+
+    /**
+     * Constructor
+     *
+     * @param  array|Zend_Config|null $options
+     * @return void
+     */
+    public function __construct($options = null)
+    {
+        $this->addPrefixPath('ZendSF_Dojo_Form_Element', 'ZendSF/Dojo/Form/Element', 'element');
+        parent::__construct($options);
+    }
 
     /**
      * Loads the default form decorators.
@@ -247,9 +263,7 @@ abstract class ZendSF_Form_Abstract extends Zend_Form
     /**
      * Model setter
      *
-     * @param object $model
-     * @return none
-     * @access public
+     * @param ZendSF_Model_Abstract
      */
     public function setModel($model)
     {
@@ -259,11 +273,28 @@ abstract class ZendSF_Form_Abstract extends Zend_Form
     /**
      * Model Getter
      *
-     * @return object model
-     * @access public
+     * @return ZendSF_Model_Abstract
      */
     public function getModel()
     {
         return $this->_model;
+    }
+
+    /**
+     * Set the view object
+     *
+     * Ensures that the view object has the dojo view helper path set.
+     *
+     * @param  Zend_View_Interface $view
+     * @return Zend_Dojo_Form_Element_Dijit
+     */
+    public function setView(Zend_View_Interface $view = null)
+    {
+        if (null !== $view) {
+            if (false === $view->getPluginLoader('helper')->getPaths('ZendSF_Dojo_View_Helper')) {
+                $view->addHelperPath('ZendSF/Dojo/View/Helper', 'ZendSF_Dojo_View_Helper');
+            }
+        }
+        return parent::setView($view);
     }
 }
