@@ -65,8 +65,8 @@ class ZendSF_Controller_Plugin_AdminContext extends Zend_Controller_Plugin_Abstr
                 $role = ($auth->hasIdentity()) ? $auth->getIdentity()->role : 'guest';
 
                 $view = Zend_Controller_Front::getInstance()
-                        ->getParam('bootstrap')
-                        ->getResource('view');
+                    ->getParam('bootstrap')
+                    ->getResource('view');
 
                 $view->navigation(new Zend_Navigation($menu))
                     ->setAcl($acl)

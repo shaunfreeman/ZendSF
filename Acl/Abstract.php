@@ -40,8 +40,6 @@ abstract class ZendSF_Acl_Abstract extends Zend_Acl
 {
     public function __construct()
     {
-        $this->deny();
-
         $this->addRole(new Zend_Acl_Role('guest'));
         $this->addRole(new Zend_Acl_Role('registered'));
         $this->addRole(new Zend_Acl_Role('admin'), 'registered');
@@ -49,6 +47,8 @@ abstract class ZendSF_Acl_Abstract extends Zend_Acl
         $this->addResource(new Zend_Acl_Resource('Guest'));
         $this->addResource(new Zend_Acl_Resource('User'));
         $this->addResource(new Zend_Acl_Resource('Admin'));
+        
+        $this->deny();
 
         $this->allow('guest', 'Guest');
         $this->allow('registered', 'User');
