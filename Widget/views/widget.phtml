@@ -7,7 +7,7 @@ $widgetClassInner = ($this->widget->params['widget_class_inner']) ? ' class="' .
 
 <div<?= $widgetId; ?><?= $widgetClass; ?>>
     <?php if ($this->widget->showTitle): ?>
-    <h2><?= $this->widget->name; ?></h2>
+    <h3><?= $this->widget->name; ?></h3>
     <?php endif; ?>
     <div<?= $widgetIdInner; ?><?= $widgetClassInner; ?>>
         <?= $this->widget->html; ?>
