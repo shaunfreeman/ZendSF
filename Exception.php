@@ -21,7 +21,6 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Exception
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
@@ -32,7 +31,6 @@
  *
  * @category   ZendSF
  * @package    ZendSF
- * @subpackage Exception
  * @copyright  Copyright (c) 2011 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license    http://www.gnu.org/licenses GNU General Public License
  * @author     Shaun Freeman <shaun@shaunfreeman.co.uk>
