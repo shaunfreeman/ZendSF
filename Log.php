@@ -47,6 +47,11 @@ class ZendSF_Log
      */
     protected $_logger;
 
+    /**
+     * Converts php error types into strings.
+     *
+     * @var array
+     */
     private $_errorType = array (
 		E_ERROR				=> 'ERROR',
 		E_WARNING			=> 'WARNING',
@@ -65,6 +70,12 @@ class ZendSF_Log
 		E_USER_DEPRECATED	=> 'USER DEPRECATED'
 	);
 
+    /**
+     * Contruct a default map of phpErrors to Zend_Log priorities.
+     * Some of the errors are uncatchable, but are included for completeness.
+     *
+     * @var array
+     */
     private $_errorHandlerMap = array (
 		E_NOTICE            => Zend_Log::NOTICE,
         E_USER_NOTICE       => Zend_Log::NOTICE,
@@ -85,10 +96,16 @@ class ZendSF_Log
      */
     const EOL = "\n";
 
-    public function __construct()
+    /**
+     * Construct method.
+     *
+     * @param Zend_Application_Bootstrap_Bootstrap $bootstrap
+     * @return none
+     */
+    public function __construct($bootstrap)
     {
-        $frontController = Zend_Controller_Front::getInstance();
-        $this->bootstrap = $frontController->getParam('bootstrap');
+        //$frontController = Zend_Controller_Front::getInstance();
+        $this->bootstrap = $bootstrap;
 
         set_error_handler(array($this,'errorHandler'));
 
@@ -130,6 +147,8 @@ class ZendSF_Log
 
     /**
      * Sets the Database profiler for the application.
+     *
+     * @return none
      */
     protected function _initDbProfiler()
     {
@@ -145,9 +164,20 @@ class ZendSF_Log
         }
     }
 
+    /**
+     * Sets up custom error handler
+     *
+     * @link http://www.php.net/manual/en/function.set-error-handler.php Custom error handler
+     * @param int $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param int $errline
+     * @param array $errcontext
+     * @return boolean
+     */
     public function errorHandler($errno, $errstr, $errfile, $errline, $errcontext)
     {
-        if ('production' == $this->getEnvironment()) {
+        if ('production' == $this->bootstrap->getEnvironment()) {
             if (isset($this->_errorHandlerMap[$errno])) {
                 $priority = $this->_errorHandlerMap[$errno];
             } else {
