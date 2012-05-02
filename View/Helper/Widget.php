@@ -78,7 +78,7 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
      */
     public function getWidgetByName($name)
     {
-        $widget = $this->_model->getWidgetByName($name);
+        $widget = $this->_model->getCached('widget')->getWidgetByName($name);
 
         if ($widget instanceof ZendSF_Model_DbTable_Row_Widget) {
             $widgetClass = $widget->widget;
@@ -99,7 +99,7 @@ class ZendSF_View_Helper_Widget extends Zend_View_Helper_Abstract
     public function getWidgetsByGroup($group)
     {
         $this->_widget = array();
-        $widgets = $this->_model->getWidgetsByGroup($group, true);
+        $widgets = $this->_model->getCached('widget')->getWidgetsByGroup($group, true);
 
         foreach ($widgets as $widget) {
            $widgetClass = $widget->widget;
