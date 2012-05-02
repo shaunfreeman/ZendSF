@@ -96,17 +96,18 @@ class ZendSF_Log
      */
     const EOL = "\n";
 
-    const BOOTSTRAP_DB = false;
+    public static $bootstrapDB = false;
 
     /**
      * Construct method.
      *
      * @param Zend_Application_Bootstrap_Bootstrap $bootstrap
+     * @param bool $bootstrapDB
      * @return none
      */
-    public function __construct($bootstrap)
+    public function __construct($bootstrap, $bootstrapDB=null)
     {
-        //$frontController = Zend_Controller_Front::getInstance();
+        if ($bootstrapDB) self::$bootstrapDB = $bootstrapDB;
         $this->bootstrap = $bootstrap;
 
         set_error_handler(array($this,'errorHandler'));
@@ -155,10 +156,10 @@ class ZendSF_Log
     protected function _initDbProfiler()
     {
         if ('production' !== $this->bootstrap->getEnvironment()) {
-            if (self::BOOTSTRAP_DB) $this->bootstrap->bootstrap('db');
+            if (self::$bootstrapDB) $this->bootstrap->bootstrap('db');
             $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
             $profiler->setEnabled(true);
-            $db = (self::BOOTSTRAP_DB) ?
+            $db = (self::$bootstrapDB) ?
                 $this->bootstrap->getPluginResource('db')->getDbAdapter() : Zend_Registry::get('db');
             $db->setProfiler($profiler);
         }
