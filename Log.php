@@ -96,6 +96,8 @@ class ZendSF_Log
      */
     const EOL = "\n";
 
+    const BOOTSTRAP_DB = false;
+
     /**
      * Construct method.
      *
@@ -152,15 +154,13 @@ class ZendSF_Log
      */
     protected function _initDbProfiler()
     {
-        $this->_logger->info(__METHOD__);
-
         if ('production' !== $this->bootstrap->getEnvironment()) {
-            $this->bootstrap->bootstrap('db');
+            if (self::BOOTSTRAP_DB) $this->bootstrap->bootstrap('db');
             $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
             $profiler->setEnabled(true);
-            $this->bootstrap->getPluginResource('db')
-                 ->getDbAdapter()
-                 ->setProfiler($profiler);
+            $db = (self::BOOTSTRAP_DB) ?
+                $this->bootstrap->getPluginResource('db')->getDbAdapter() : Zend_Registry::get('db');
+            $db->setProfiler($profiler);
         }
     }
 
