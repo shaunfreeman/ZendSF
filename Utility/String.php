@@ -55,4 +55,28 @@ class ZendSF_Utility_String
         ));
         return ucfirst($inflector->filter(array('name' => $name)));
     }
+
+    /**
+     * Checks if a string starts with a pattern.
+     *
+     * @param strin $needle string pattern
+     * @param string $haystack string to check
+     * @return bool
+     */
+    public static function startsWith($needle, $haystack)
+    {
+        return preg_match('/^' . preg_quote($needle).'/', $haystack);
+    }
+
+    /**
+     * Checks if a string ends with a pattern.
+     *
+     * @param string $needle string pattern
+     * @param strind $haystack string to check
+     * @return bool
+     */
+    public static function endsWith($needle, $haystack)
+    {
+        return preg_match('/' . preg_quote($needle) .'$/', $haystack);
+    }
 }
