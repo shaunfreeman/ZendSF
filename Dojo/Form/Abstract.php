@@ -227,7 +227,7 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
             'salt'          => 'unique',
             'decorators'    => $this->_hashDecorators,
             'attribs'       => array(
-                'data-dojo-type'    => 'dojox.form.TextBox',
+                'data-dojo-type'    => 'dijit.form.TextBox',
             )
         ));
 
