@@ -162,6 +162,7 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
     public function __construct($options = null)
     {
         $this->addPrefixPath('ZendSF_Dojo_Form_Element', 'ZendSF/Dojo/Form/Element', 'element');
+        Zend_Dojo::enableForm($this);
         parent::__construct($options);
     }
 
@@ -204,7 +205,10 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
     {
         $this->addElement('hidden', $id, array(
             'value'         => $value,
-            'decorators'    => $this->_hiddenDecorators
+            'decorators'    => $this->_hiddenDecorators,
+            'attribs'       => array(
+                'data-dojo-type'    => 'dijit.form.TextBox',
+            )
         ));
 
         return $this;
@@ -221,41 +225,11 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
         $this->addElement('hash', $id, array(
             'ignore'        => true,
             'salt'          => 'unique',
-            'decorators'    => $this->_hashDecorators
+            'decorators'    => $this->_hashDecorators,
+            'attribs'       => array(
+                'data-dojo-type'    => 'dojox.form.TextBox',
+            )
         ));
-
-        return $this;
-    }
-
-    /**
-     * Adds the Captcha element to the form.
-     *
-     * @param array $data array of options to apply for the captcha
-     * @param string $class elements class name
-     */
-    public function addCaptcha($data, $class = '')
-    {
-        $this->addElement('captcha', 'captcha', array(
-            'captcha'    => $data,
-            'required'   => true,
-            'label'      => _('Please enter the letters displayed below:'),
-            'attribs'    => array ('class' => $class),
-            'decorators' => $this->_captchaDecorators
-        ));
-    }
-
-    /**
-     * Excludes the email from validating against the database.
-     *
-     * @param string $email
-     * @return ZendSF_Form_Abstract
-     * @access public
-     */
-    public function excludeEmailFromValidation($element, $exclude)
-    {
-        $val = $this->getElement($element)
-                ->getValidator('Db_NoRecordExists')
-                ->setExclude($exclude);
 
         return $this;
     }
