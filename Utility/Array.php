@@ -44,30 +44,26 @@ class ZendSF_Utility_Array
      * then it converts it to an array and then merges it.
      *
      * @param mixed $array
-     * @param mixed $return_array
      * @return array
      */
-    public static function mergeMultiArray($array, &$return_array = null)
+    public static function mergeMultiArray($array)
     {
-        if (!is_array($return_array)) {
-            $return_array = array();
-        }
-
         if ($array instanceof Zend_Config) {
             $array = $array->toArray();
         }
 
-        foreach ($array as $value) {
-            if (is_array($value)) {
-                self::mergeMultiArray($value, $return_array);
-            } else {
-                $return_array[] = $value;
-            }
-        }
+        foreach(new RecursiveIteratorIterator(
+		    new RecursiveArrayIterator((array) $array),
+		    RecursiveIteratorIterator::SELF_FIRST
+		) as $key => $value) {
+		    if(!is_array($value)) {
+		        $return_array[$key] = $value;
+		    }
+		}
 
         return $return_array;
     }
-
+	
     /**
      * Turns an array into an object.
      *
