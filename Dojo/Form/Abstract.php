@@ -44,28 +44,6 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
      */
     protected $_model;
 
-    protected $_captchaDecorators = array(
-        'Errors',
-        array(
-            array('data' => 'HtmlTag'),
-            array(
-                'tag'   => 'p',
-                'class' => 'element'
-            )
-        ),
-        array(
-            'Label',
-            array('tag' => 'p')
-        ),
-        array(
-            array('row' => 'HtmlTag'),
-            array(
-                'tag'   => 'div',
-                'id'    => 'captcha'
-            )
-        )
-    );
-
     protected $_defaultDecorators = array(
         'Description',
         'FormElements',
@@ -252,6 +230,22 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
     public function getModel()
     {
         return $this->_model;
+    }
+
+    /**
+     * Excludes the email from validating against the database.
+     *
+     * @param string $email
+     * @return ZendSF_Form_Abstract
+     * @access public
+     */
+    public function excludeEmailFromValidation($element, $exclude)
+    {
+        $val = $this->getElement($element)
+                ->getValidator('Db_NoRecordExists')
+                ->setExclude($exclude);
+
+        return $this;
     }
 
     /**
