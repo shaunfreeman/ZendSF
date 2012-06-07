@@ -230,6 +230,7 @@ abstract class ZendSF_Model_Abstract
 
         return $this->_cache;
     }
+    
     /**
      * Classes are named spaced using their module name
      * this returns that module name or the first class name segment.
