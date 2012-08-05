@@ -249,8 +249,8 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
     public function excludeEmailFromValidation($element, $exclude)
     {
         $val = $this->getElement($element)
-                ->getValidator('Db_NoRecordExists')
-                ->setExclude($exclude);
+            ->getValidator('Db_NoRecordExists')
+            ->setExclude($exclude);
 
         return $this;
     }
