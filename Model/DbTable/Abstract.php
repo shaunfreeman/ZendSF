@@ -49,6 +49,12 @@ abstract class ZendSF_Model_DbTable_Abstract extends Zend_Db_Table_Abstract
         $this->_log = Zend_Registry::get('dblog');
     }
 
+    public function getRowById($id)
+    {
+        $id = (int) $id;
+        return $this->find($id)->current();
+    }
+
     /**
      * Save a row to the database
      *

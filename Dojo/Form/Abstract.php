@@ -50,11 +50,11 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
         array(
             'HtmlTag',
             array(
-                'tag'   => 'div',
+                'tag'   => 'table',
                 'class' => 'zend_form'
             )
         ),
-        'DijitForm'
+        //'DijitForm'
     );
 
     /**
@@ -69,18 +69,21 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
         array(
             array('data' => 'HtmlTag'),
             array(
-                'tag' => 'p',
+                'tag' => 'td',
                 'class' => 'element'
             )
         ),
         array(
             'Label',
-            array('tag' => 'p')
+            array(
+            	'tag' => 'th',
+            	'class' => 'label'
+            )
         ),
         array(
             array('row' => 'HtmlTag'),
             array(
-                'tag' => 'div',
+                'tag' => 'tr',
                 'class' => 'form_row'
             )
         )
@@ -93,17 +96,17 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
         array(
             array('data' => 'HtmlTag'),
             array(
-                'tag' => 'p',
+                'tag' => 'td',
                 'class' => 'element'
             )
         ),
         array(
             'Label',
-            array('tag' => 'p')
+            array('tag' => 'th')
         ),
         array(
             array('row' => 'HtmlTag'),
-            array('tag' => 'div')
+            array('tag' => 'tr')
         )
     );
 
@@ -111,7 +114,7 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
         'ViewHelper',
         array(
             'HtmlTag',
-            array('tag' => 'div')
+            array('tag' => 'span')
         )
     );
 
@@ -127,7 +130,11 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
         'DijitElement',
         array(
             'HtmlTag',
-            array('tag' => 'span')
+            array(
+            	'tag' => 'span',
+            	'class' => 'formButton',
+            	
+            )
         )
     );
 

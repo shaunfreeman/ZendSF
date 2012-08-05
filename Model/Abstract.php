@@ -196,11 +196,10 @@ abstract class ZendSF_Model_Abstract
     public function getCacheOptions()
     {
         if (empty($this->_cacheOptions)) {
-           $cacheOptions = Zend_Registry::get('config')
-                ->cache
-                ->model;
+            $cacheOptions = Zend_Registry::get('config')->cache->model;
 
             $this->_cacheOptions = array(
+                'useCache'          => $cacheOptions->useCache,
                 'frontend'          => $cacheOptions->frontend->type,
                 'backend'           => $cacheOptions->backend->type,
                 'frontendOptions'   => $cacheOptions->frontendOptions->toArray(),
@@ -220,17 +219,26 @@ abstract class ZendSF_Model_Abstract
     public function getCached($tagged = null)
     {
         if (null === $this->_cache) {
-            $this->_cache = new ZendSF_Model_Cache(
-                $this,
-                $this->getCacheOptions()
-            );
+            $options = $this->getCacheOptions();
+            unset($options['useCache']);
+
+            if ($this->_cacheOptions['useCache']) {
+                $this->_cache = new ZendSF_Model_Cache(
+                    $this,
+                    $options
+                );
+            }
         }
 
-        $this->_cache->setTagged($tagged);
+        if ($this->_cache instanceof ZendSF_Model_Cache_Abstract) {
+            $this->_cache->setTagged($tagged);
 
-        return $this->_cache;
+            return $this->_cache;
+        } else {
+            return $this;
+        }
     }
-    
+
     /**
      * Classes are named spaced using their module name
      * this returns that module name or the first class name segment.
