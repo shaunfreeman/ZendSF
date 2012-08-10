@@ -168,6 +168,8 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
      */
     public function addSubmit($label, $name = 'submit', $attribs = array())
     {
+        trigger_error('Use $this->addElement() instead', E_USER_DEPRECATED);
+        
         $this->addElement('SubmitButton', $name, array(
             'ignore'        => true,
             'required'      => false,
@@ -187,7 +189,7 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
      * @return ZendSF_Form_Abstract
      */
     public function addHiddenElement($id, $value)
-    {
+    {  
         $this->addElement('hidden', $id, array(
             'value'         => $value,
             'decorators'    => $this->_hiddenDecorators,

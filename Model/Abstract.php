@@ -238,6 +238,24 @@ abstract class ZendSF_Model_Abstract
             return $this;
         }
     }
+    
+    /**
+     * Clears the cache using a tag.
+     * 
+     * @param string $tag
+     */
+    public function clearCache(array $tags)
+    {
+    	$cache = $this->getCached();
+    	
+    	if ($this->_cache instanceof ZendSF_Model_Cache_Abstract) {
+    		$log = Zend_Registry::get('log');
+    		$log->info($tags);
+    		
+	    	$cache->getCache()
+	    		->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, $tags);
+    	}
+    }
 
     /**
      * Classes are named spaced using their module name

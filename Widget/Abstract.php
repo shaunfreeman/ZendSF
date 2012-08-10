@@ -63,15 +63,9 @@ abstract class ZendSF_Widget_Abstract
     {
         $this->_view = new Zend_View();
 
-        $this->_view->addHelperPath(
-            realpath(APPLICATION_PATH . '/../library/ZendSF/View/Helper'),
-            'ZendSF_View_Helper'
-        );
+        $this->_view->addHelperPath('ZendSF/View/Helper', 'ZendSF_View_Helper');
 
-        $this->_view->setScriptPath(
-            realpath(APPLICATION_PATH
-            . '/../library/ZendSF/Widget/views')
-        );
+        $this->_view->setScriptPath(realpath(dirname(__FILE__) . '/views'));
 
         $this->_view->addScriptPath(
             realpath(APPLICATION_PATH
