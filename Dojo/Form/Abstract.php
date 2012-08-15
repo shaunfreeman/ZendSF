@@ -54,7 +54,7 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
                 'class' => 'zend_form'
             )
         ),
-        //'DijitForm'
+        'DijitForm'
     );
 
     /**
@@ -156,7 +156,15 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
      */
     public function loadDefaultDecorators()
     {
-        $this->setDecorators($this->_defaultDecorators);
+    	if ($this->loadDefaultDecoratorsIsDisabled()) {
+    		return;
+    	}
+    	
+    	$decorators = $this->getDecorators();
+    	
+    	if (empty($decorators)) {
+        	$this->setDecorators($this->_defaultDecorators);
+    	}
     }
 
     /**
