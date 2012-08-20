@@ -137,6 +137,25 @@ class ZendSF_Dojo_Form_Abstract extends Zend_Dojo_Form
             )
         )
     );
+    
+    protected $_submitGroupDecorators = array(
+    	'FormElements',
+    	array(
+    		array('data' => 'HtmlTag'),
+    		array(
+    			'tag' => 'td',
+    			'class' => 'submitElement',
+    			'colspan' => '2'
+    		)
+    	),
+    	array(
+    		array('row' => 'HtmlTag'),
+    		array(
+    			'tag' => 'tr',
+    			'class' => 'form_row'
+    		)
+    	)
+    );
 
     /**
      * Constructor
